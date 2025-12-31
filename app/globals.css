@@ -1,42 +1,269 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* HSL Color Tokens - Yellow & White Theme */
+  --primary: 45 100% 50%;
+  /* Vibrant Yellow */
+  --primary-dark: 45 100% 45%;
+  --secondary: 0 0% 10%;
+  /* Black */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+  --background: 0 0% 98%;
+  /* Off-White */
+  --surface: 0 0% 100%;
+  /* Pure White */
+  --surface-hover: 0 0% 96%;
 
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
+  --text-main: 0 0% 10%;
+  /* Near Black */
+  --text-muted: 0 0% 40%;
+  /* Grey */
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --success: 150 80% 35%;
+  /* Darker Green for visibility on white */
+  --warning: 35 100% 50%;
+  --error: 350 80% 55%;
+
+  --input-bg: 0 0% 96%;
+  --border-color: 0 0% 90%;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  --font-main: 'Outfit', sans-serif;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
   margin: 0;
+  padding: 0;
 }
 
-a {
-  color: inherit;
+body {
+  background-color: hsl(var(--background));
+  color: var(--text-main);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: hsl(var(--primary));
+  color: black;
+  box-shadow: 0 4px 15px hsla(var(--primary), 0.4);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px hsla(var(--primary), 0.5);
+  background: hsl(var(--primary-dark));
+}
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: white;
+  font-weight: 700;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border-radius: var(--radius-md);
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Cards */
+.glass-card {
+  background: hsl(var(--surface));
+  border: 1px solid hsl(var(--border-color));
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow 0.2s;
+}
+
+.glass-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Inputs */
+.input-field {
+  width: 100%;
+  padding: 0.75rem;
+  background: hsl(var(--input-bg));
+  border: 1px solid hsl(var(--border-color));
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-field:focus {
+  border-color: hsl(var(--primary));
+  background: white;
+}
+
+/* Typography */
+h1,
+h2,
+h3 {
+  line-height: 1.1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: black;
+}
+
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.verified-badge {
+  color: hsl(var(--success));
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  background: hsla(var(--success), 0.1);
+  padding: 0.25rem 0.6rem;
+  border-radius: var(--radius-sm);
+}
+
+/* Hero Section Hover Effects */
+.search-btn:hover {
+  transform: scale(1.05);
+}
+
+.cta-btn:hover {
+  transform: translateY(-3px);
+}
+
+/* Navbar Styles */
+.nav-link:hover {
+  color: #FDB813 !important;
+}
+
+.nav-btn:hover {
+  background: #1a1a1a;
+  color: #FDB813;
+}
+
+.nav-btn-primary:hover {
+  background: #1a1a1a;
+  color: #FDB813;
+  border-color: #1a1a1a;
+}
+
+/* Animated Text Explainer */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
   }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.8s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.8s ease-out;
+}
+
+/* Stagger animation delays for sequential appearance */
+.slide-in-left:nth-child(1) {
+  animation-delay: 0.2s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.slide-in-right:nth-child(2) {
+  animation-delay: 0.5s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.slide-in-left:nth-child(3) {
+  animation-delay: 0.8s;
+  opacity: 0;
+  animation-fill-mode: forwards;
+}
+
+.slide-in-right:nth-child(4) {
+  animation-delay: 1.1s;
+  opacity: 0;
+  animation-fill-mode: forwards;
 }
