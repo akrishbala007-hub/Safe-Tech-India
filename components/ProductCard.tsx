@@ -24,11 +24,11 @@ export default function ProductCard({ product }: { product: any }) {
                     {product.title}
                 </h3>
 
-                {/* Dealer Info */}
+                {/* Dealer Info - Shop Name Blurred */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                    <span>{product.profiles.shop_name}</span>
+                    <span style={{ filter: 'blur(4px)', userSelect: 'none', opacity: 0.7 }}>{product.profiles.shop_name}</span>
                     {product.profiles.is_verified && <span className="verified-badge" style={{ fontSize: '0.7rem', padding: '2px 4px' }}>✓</span>}
-                    <span>• {product.profiles.city}</span>
+                    <span>{product.profiles.city}</span>
                 </div>
 
                 {/* Specs Snippet */}
@@ -43,10 +43,9 @@ export default function ProductCard({ product }: { product: any }) {
                         ₹{product.price.toLocaleString()}
                     </div>
 
-                    <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="btn btn-whatsapp">
-                        <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.698c1.005.549 1.992.839 3.033.839 3.18 0 5.765-2.587 5.766-5.766.001-3.18-2.585-5.766-5.766-5.766zm-12 5.766c0-6.627 5.373-12 12-12s12 5.373 12 12-5.373 12-12 12c-3.168 0-6.046-1.226-8.15-3.232l-3.85 1.012 1.028-3.754c-2.28-2.26-3.702-5.385-3.702-8.986l-.026-.005z" /></svg>
-                        Chat on WhatsApp
-                    </a>
+                    <Link href="/login" className="btn btn-whatsapp" style={{ textAlign: 'center', display: 'block', textDecoration: 'none' }}>
+                        Login to Chat
+                    </Link>
                 </div>
             </div>
         </div>

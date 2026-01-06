@@ -378,10 +378,11 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                     {engineer.is_verified && <span style={{ color: 'green', fontSize: '1.5rem' }}>✓</span>}
                   </div>
                   <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '0.5rem' }}>📍 {engineer.city} - {engineer.pincode}</p>
-                  <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '1rem' }}>📞 {engineer.phone}</p>
-                  <a
-                    href={`https://wa.me/${engineer.whatsapp_number}`}
-                    target="_blank"
+                  <p style={{ color: '#888', fontSize: '0.85rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    📞 <span style={{ filter: 'blur(4px)', userSelect: 'none' }}>{engineer.phone}</span>
+                  </p>
+                  <Link
+                    href="/login"
                     className="btn"
                     style={{
                       background: '#25D366',
@@ -389,11 +390,13 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                       width: '100%',
                       textAlign: 'center',
                       fontSize: '0.9rem',
-                      padding: '0.5rem'
+                      padding: '0.5rem',
+                      display: 'block',
+                      textDecoration: 'none'
                     }}
                   >
-                    Contact on WhatsApp
-                  </a>
+                    Login to Connect
+                  </Link>
                 </div>
               ))}
             </div>
@@ -607,17 +610,66 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         </div>
       </section>
 
-      {/* Footer */}
-      <footer style={{ background: '#111', color: '#888', padding: '3rem 1rem', marginTop: 'auto' }}>
-        <div className="container" style={{ textAlign: 'center' }}>
-          <h3 style={{ color: 'white', marginBottom: '1rem' }}>Safe Tech India</h3>
-          <p style={{ marginBottom: '2rem' }}>The Trusted B2B & B2C Marketplace for Computer Dealers.</p>
-          <div style={{ fontSize: '0.8rem' }}>
-            Keywords: B2B & B2C Computer Marketplace India, Refurbished Laptop Wholesale, Retail Computer Deals, Safe Tech India Hardware, Second Hand Laptop Market.
+      <footer style={{ background: '#0a0a0a', color: '#888', paddingTop: '4rem', paddingBottom: '2rem', borderTop: '1px solid #333', marginTop: 'auto' }}>
+        <div className="container">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem', marginBottom: '3rem' }}>
+            {/* Brand & About */}
+            <div>
+              <h3 style={{ color: 'white', marginBottom: '1.5rem', fontSize: '1.5rem' }}>Safe Tech India</h3>
+              <p style={{ lineHeight: '1.6', marginBottom: '1.5rem' }}>
+                India’s #1 Dedicated Marketplace for Computer Dealers & Wholesalers. Connecting verified buyers and sellers across the nation.
+              </p>
+              <div style={{ fontSize: '0.9rem' }}>
+                <Link href="/about" style={{ color: '#888', marginRight: '1rem', textDecoration: 'underline' }}>About Us</Link>
+                <Link href="/login" style={{ color: '#888', marginRight: '1rem', textDecoration: 'underline' }}>Login</Link>
+                <Link href="/register" style={{ color: '#888', textDecoration: 'underline' }}>Register</Link>
+              </div>
+            </div>
+
+            {/* Locations List */}
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '1.5rem' }}>📍 Partner Support Hubs</h4>
+              <ul style={{ listStyle: 'none', padding: 0, display: 'grid', gap: '0.8rem', fontSize: '0.95rem' }}>
+                {[
+                  { city: 'Chennai', area: 'Ritchie Street / Mount Road' },
+                  { city: 'Coimbatore', area: 'Gandhipuram / 100 Feet Road' },
+                  { city: 'Bangalore', area: 'SP Road / MG Road' },
+                  { city: 'Delhi', area: 'Nehru Place' },
+                  { city: 'Mumbai', area: 'Lamington Road' },
+                  { city: 'Hyderabad', area: 'Hitec City' },
+                  { city: 'Pune', area: 'Tilak Road' }
+                ].map(loc => (
+                  <li key={loc.city} style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid #222', paddingBottom: '0.5rem' }}>
+                    <strong style={{ color: '#ccc' }}>{loc.city}</strong>
+                    <span style={{ textAlign: 'right' }}>{loc.area}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Map View */}
+            <div>
+              <h4 style={{ color: 'white', marginBottom: '1.5rem' }}>🌏 Map View</h4>
+              <div style={{ width: '100%', height: '250px', background: '#222', borderRadius: '12px', overflow: 'hidden', border: '1px solid #333' }}>
+                <iframe
+                  width="100%"
+                  height="100%"
+                  frameBorder="0"
+                  style={{ border: 0, opacity: 0.8, filter: 'invert(90%) hue-rotate(180deg)' }}
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15555.987654!2d78.0!3d22.0!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30635ff06b92b791%3A0xd78c4fae854213a6!2sIndia!5e0!3m2!1sen!2sin!4v1625000000000!5m2!1sen!2sin"
+                  allowFullScreen
+                  title="Partner Hubs Map"
+                ></iframe>
+              </div>
+            </div>
           </div>
-          <div style={{ marginTop: '2rem', fontSize: '0.9rem' }}>
-            <Link href="/about" style={{ color: '#888', marginRight: '1rem', textDecoration: 'underline' }}>About Us</Link>
-            &copy; {new Date().getFullYear()} Safe Tech India. All rights reserved.
+
+          {/* Bottom Bar */}
+          <div style={{ borderTop: '1px solid #222', paddingTop: '2rem', textAlign: 'center', fontSize: '0.9rem' }}>
+            <p>&copy; {new Date().getFullYear()} Safe Tech India. All rights reserved.</p>
+            <p style={{ marginTop: '0.5rem', opacity: 0.6, fontSize: '0.8rem' }}>
+              Keywords: B2B & B2C Computer Marketplace India, Refurbished Laptop Wholesale, Retail Computer Deals.
+            </p>
           </div>
         </div>
       </footer>
