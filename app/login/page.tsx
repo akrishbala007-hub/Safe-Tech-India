@@ -11,6 +11,18 @@ export default function Login() {
     const [password, setPassword] = useState('')
     const [userType, setUserType] = useState<'user' | 'dealer' | 'service_engineer' | 'admin'>('user')
     const [loading, setLoading] = useState(false)
+    const [showRegistrationPrompt, setShowRegistrationPrompt] = useState(false)
+
+    const handleGoogleLogin = async () => {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${window.location.origin}/auth/callback?role=${userType}`,
+                queryParams: { access_type: 'offline', prompt: 'consent' },
+            },
+        })
+        if (error) alert(error.message)
+    }
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -21,39 +33,47 @@ export default function Login() {
             password,
         })
 
+        console.log('SignIn Response:', { user: data.user?.id, error: error?.message })
+
         if (error) {
-            alert(error.message)
+            console.error('Login error:', error.message)
+            alert(`Login Failed: ${error.message}`)
             setLoading(false)
             return
         }
 
         if (data.user) {
-            // Check role to redirect
-            const { data: profile } = await supabase
+            console.log('Fetching profile for ID:', data.user.id)
+            const { data: profile, error: profileError } = await supabase
                 .from('profiles')
                 .select('role')
                 .eq('id', data.user.id)
                 .single()
 
-            // Verify the user's actual role matches the selected type
+            console.log('Profile Response:', { profile, error: profileError?.message })
+
+            if (profileError) {
+                alert(`Error fetching profile: ${profileError.message}`)
+                setLoading(false)
+                return
+            }
+
             if (profile && profile.role !== userType) {
-                alert(`This account is registered as a ${profile.role}, not a ${userType}. Please select the correct user type.`)
+                alert(`Role Mismatch: This account is registered as a ${profile.role}, not a ${userType}.`)
                 await supabase.auth.signOut()
                 setLoading(false)
                 return
             }
 
-            // Redirect based on role
             if (profile?.role === 'admin') {
+                console.log('Redirecting to /admin')
                 router.push('/admin')
-            } else if (profile?.role === 'user') {
-                router.push('/dashboard')
-            } else if (profile?.role === 'service_engineer') {
-                router.push('/dashboard')
             } else {
+                console.log('Redirecting to /dashboard')
                 router.push('/dashboard')
             }
         }
+        setLoading(false)
     }
 
     return (
@@ -67,7 +87,28 @@ export default function Login() {
                     Sign in to access your dashboard
                 </p>
 
-                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                {/* Google Login */}
+                <button
+                    onClick={handleGoogleLogin}
+                    className="btn"
+                    style={{
+                        width: '100%',
+                        background: 'white',
+                        color: '#333',
+                        border: '1px solid #ccc',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+                        marginBottom: '1.5rem'
+                    }}
+                >
+                    <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" style={{ width: '20px' }} />
+                    Sign in with Google
+                </button>
+
+                <div style={{ textAlign: 'center', marginBottom: '1.5rem', opacity: 0.7 }}>
+                    — OR —
+                </div>
+
+                <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }} autoComplete="off">
                     {/* User Type Selection */}
                     <div>
                         <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500', fontSize: '0.9rem' }}>
@@ -105,6 +146,8 @@ export default function Login() {
                             onChange={(e) => setEmail(e.target.value)}
                             required
                             style={{ width: '100%' }}
+                            autoComplete="off"
+                            name="email_new"
                         />
                     </div>
 
@@ -121,6 +164,8 @@ export default function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                             required
                             style={{ width: '100%' }}
+                            autoComplete="new-password"
+                            name="password_new"
                         />
                     </div>
 
@@ -169,6 +214,39 @@ export default function Login() {
                     </Link>
                 </p>
             </div>
+
+            {/* Registration Prompt Modal */}
+            {showRegistrationPrompt && (
+                <div style={{
+                    position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+                    background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    zIndex: 1000, backdropFilter: 'blur(5px)'
+                }}>
+                    <div className="glass-card" style={{ maxWidth: '400px', width: '90%', textAlign: 'center', padding: '2rem' }}>
+                        <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>🤔</div>
+                        <h2 style={{ marginBottom: '1rem' }}>Account Not Found</h2>
+                        <p style={{ color: 'var(--text-muted)', marginBottom: '2rem' }}>
+                            We couldn't find an account with these credentials. Would you like to create a new account?
+                        </p>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                            <Link
+                                href={`/register?type=${userType}`}
+                                className="btn btn-primary"
+                                style={{ width: '100%', justifyContent: 'center' }}
+                            >
+                                Yes, Register as {userType === 'user' ? 'User' : userType === 'dealer' ? 'Dealer' : 'Engineer'}
+                            </Link>
+                            <button
+                                onClick={() => setShowRegistrationPrompt(false)}
+                                className="btn"
+                                style={{ width: '100%', justifyContent: 'center', background: 'transparent', border: '1px solid rgba(255,255,255,0.1)' }}
+                            >
+                                No, try again
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -73,7 +73,7 @@ export async function middleware(request: NextRequest) {
         // Only dealers and service engineers need active subscription
         // Regular users can access dashboard without subscription
         if (profile && (profile.role === 'dealer' || profile.role === 'service_engineer')) {
-            if (profile.subscription_status !== 'active') {
+            if (profile.subscription_status !== 'active' && profile.subscription_status !== 'pending') {
                 return NextResponse.redirect(new URL('/register?error=subscription_required', request.url))
             }
         }

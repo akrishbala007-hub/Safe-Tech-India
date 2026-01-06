@@ -9,12 +9,37 @@ export default function ServiceRequestModal() {
     const [formData, setFormData] = useState({
         description: '',
         address: '',
-        pincode: ''
+        pincode: '',
+        phone: ''
     })
+
+    // Fetch user details when modal opens
+    const handleOpen = async () => {
+        setIsOpen(true)
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+            const { data: profile } = await supabase.from('profiles').select('phone, city, address').eq('id', user.id).single()
+            if (profile) {
+                setFormData(prev => ({
+                    ...prev,
+                    phone: profile.phone || '',
+                    address: profile.address || '',
+                    // We don't have pincode in profile usually, but if we did:
+                    // pincode: profile.pincode || ''
+                }))
+            }
+        }
+    }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
+
+        if (!formData.phone || formData.phone.length < 10) {
+            alert('Please enter a valid phone number.')
+            setLoading(false)
+            return
+        }
 
         // Get User
         const { data: { user } } = await supabase.auth.getUser()
@@ -29,6 +54,7 @@ export default function ServiceRequestModal() {
             description: formData.description,
             address: formData.address,
             pincode: formData.pincode,
+            phone: formData.phone,
             status: 'open'
         })
 
@@ -38,14 +64,14 @@ export default function ServiceRequestModal() {
         } else {
             alert('Service Request Submitted! An admin will assign an engineer shortly.')
             setIsOpen(false)
-            setFormData({ description: '', address: '', pincode: '' })
+            setFormData({ description: '', address: '', pincode: '', phone: '' })
             setLoading(false)
         }
     }
 
     return (
         <>
-            <button onClick={() => setIsOpen(true)} className="btn" style={{ background: '#3b82f6', color: 'white', padding: '0.8rem 1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <button onClick={handleOpen} className="btn" style={{ background: '#3b82f6', color: 'white', padding: '1rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', width: '100%', fontSize: '1.1rem' }}>
                 🛠️ Request Repair
             </button>
 
@@ -71,9 +97,23 @@ export default function ServiceRequestModal() {
                                 />
                             </div>
 
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', color: '#aaa' }}>Phone Number <span style={{ color: 'red' }}>*</span></label>
+                                <input
+                                    type="tel"
+                                    placeholder="Enter 10-digit mobile number"
+                                    className="input-field"
+                                    value={formData.phone}
+                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                                    required
+                                    pattern="[0-9]{10}"
+                                    title="Please enter a valid 10-digit mobile number"
+                                />
+                            </div>
+
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                 <div>
-                                    <label style={{ display: 'block', marginBottom: '0.5rem', color: '#aaa' }}>Address</label>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', color: '#aaa' }}>Address <span style={{ color: 'red' }}>*</span></label>
                                     <input
                                         type="text"
                                         placeholder="Area / Street"
@@ -84,7 +124,7 @@ export default function ServiceRequestModal() {
                                     />
                                 </div>
                                 <div>
-                                    <label style={{ display: 'block', marginBottom: '0.5rem', color: '#aaa' }}>Pincode</label>
+                                    <label style={{ display: 'block', marginBottom: '0.5rem', color: '#aaa' }}>Pincode <span style={{ color: 'red' }}>*</span></label>
                                     <input
                                         type="text"
                                         placeholder="600002"

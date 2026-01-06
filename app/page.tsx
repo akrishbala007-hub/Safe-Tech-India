@@ -163,14 +163,15 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
       {/* Hero Section */}
       <section style={{
-        padding: '8rem 1rem 6rem',
+        padding: '10rem 1rem 4rem',
         textAlign: 'center',
         background: 'linear-gradient(135deg, #FDB813 0%, #FFCD00 100%)',
         position: 'relative',
         overflow: 'hidden',
-        minHeight: '90vh',
+        minHeight: '85vh',
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'flex-start',
+        justifyContent: 'center'
       }}>
         {/* Circuit Board Pattern Background */}
         <div style={{
@@ -339,9 +340,6 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <Link href="/login" style={{ color: '#1a1a1a', textDecoration: 'none', fontWeight: '600' }}>
               Already a member? <strong>Login →</strong>
             </Link>
-            <Link href="/admin" style={{ color: '#1a1a1a', textDecoration: 'none', fontWeight: '600' }}>
-              🛡️ <strong>Admin Panel</strong>
-            </Link>
           </div>
         </div>
       </section>
@@ -416,22 +414,37 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
                     {dealer.is_verified && <span style={{ color: 'green' }}>✓</span>}
                   </div>
                   <p style={{ color: '#666', fontSize: '0.9rem', marginBottom: '0.5rem' }}>📍 {dealer.city}</p>
-                  <a
-                    href={`https://wa.me/${dealer.whatsapp_number}`}
-                    target="_blank"
-                    className="btn"
-                    style={{
-                      background: '#25D366',
-                      color: 'white',
-                      width: '100%',
-                      textAlign: 'center',
-                      marginTop: '0.5rem',
-                      fontSize: '0.9rem',
-                      padding: '0.5rem'
-                    }}
-                  >
-                    Chat on WhatsApp
-                  </a >
+                  <div style={{ display: 'flex', gap: '0.5rem', marginTop: '0.5rem' }}>
+                    <Link
+                      href={`/shop/${dealer.slug || dealer.id}`}
+                      className="btn"
+                      style={{
+                        background: '#1a1a1a',
+                        color: 'white',
+                        flex: 1,
+                        textAlign: 'center',
+                        fontSize: '0.9rem',
+                        padding: '0.5rem'
+                      }}
+                    >
+                      View Shop 🏪
+                    </Link>
+                    <a
+                      href={`https://wa.me/${dealer.whatsapp_number}`}
+                      target="_blank"
+                      className="btn"
+                      style={{
+                        background: '#25D366',
+                        color: 'white',
+                        flex: 1,
+                        textAlign: 'center',
+                        fontSize: '0.9rem',
+                        padding: '0.5rem'
+                      }}
+                    >
+                      WhatsApp
+                    </a>
+                  </div>
                 </div >
               ))}
             </div >
