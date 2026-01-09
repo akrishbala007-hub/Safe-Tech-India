@@ -55,7 +55,19 @@ export async function middleware(request: NextRequest) {
         }
     )
 
-    const { data: { user } } = await supabase.auth.getUser()
+    let user = null
+    try {
+        const { data, error } = await supabase.auth.getUser()
+        if (error) {
+            // If the error is 'AuthApiError: Invalid Refresh Token', we should probably ignore it 
+            // and treat as signed out, rather than crashing or throwing 500.
+            console.error('Middleware Auth Error:', error.message)
+        }
+        user = data?.user ?? null
+    } catch (err) {
+        console.error('Middleware Unexpected Error:', err)
+        // Treat as signed out
+    }
 
     // Protect /dashboard routes
     if (request.nextUrl.pathname.startsWith('/dashboard')) {

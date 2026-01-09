@@ -1,4 +1,4 @@
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import ProductCard from '@/components/ProductCard'
 import Link from 'next/link'
 
@@ -9,6 +9,7 @@ import PostRequirementModal from '@/components/PostRequirementModal'
 import ServiceRequestModal from '@/components/ServiceRequestModal'
 
 export default async function MarketPage({ searchParams }: { searchParams: { q?: string; city?: string } }) {
+    const supabase = await createClient()
     const query = searchParams.q || ''
     const city = searchParams.city || ''
 

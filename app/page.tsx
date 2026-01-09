@@ -1,11 +1,10 @@
-import { supabase } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import ProductCard from '@/components/ProductCard'
 import Navbar from '@/components/Navbar'
 import type { Metadata } from 'next'
 
-// Force dynamic rendering
-export const dynamic = 'force-dynamic'
+// ... (Metadata stays same)
 
 export const metadata: Metadata = {
   title: 'Safe Tech India | B2B & B2C Marketplace for Computer Dealers',
@@ -13,7 +12,8 @@ export const metadata: Metadata = {
   keywords: ['B2B Computer Marketplace', 'B2C Computer Marketplace India', 'Refurbished Laptop Wholesale', 'Safe Tech India Hardware', 'Computer Dealer Directory'],
 }
 
-// JSON-LD Schema
+// ... (Schema stays same)
+
 const schemaData = {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -29,6 +29,7 @@ const schemaData = {
 }
 
 export default async function Home({ searchParams }: { searchParams: Promise<{ q?: string; city?: string }> }) {
+  const supabase = await createClient() // Initialize server client
   const params = await searchParams
   const query = params.q || ''
   const city = params.city || ''
@@ -162,7 +163,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
       <Navbar />
 
       {/* Hero Section */}
-      <section style={{
+      <section className="home-hero" style={{
         padding: '10rem 1rem 4rem',
         textAlign: 'center',
         background: 'linear-gradient(135deg, #FDB813 0%, #FFCD00 100%)',
@@ -192,9 +193,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           {/* Logo */}
           <div style={{ marginBottom: '2rem' }}>
             <img src="/logo.png" alt="Safe Tech India" style={{
-              height: '120px',
+              height: '220px',
               display: 'inline-block',
-              filter: 'drop-shadow(0 6px 12px rgba(0,0,0,0.15))'
+              filter: 'invert(1)',
+              mixBlendMode: 'screen'
             }} />
           </div>
 

@@ -20,7 +20,7 @@ export default function Navbar() {
             }}>
                 {/* Logo */}
                 <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                    <img src="/logo.png" alt="Safe Tech India" style={{ height: '50px' }} />
+                    <img src="/logo.png" alt="Safe Tech India" style={{ height: '85px' }} />
                 </Link>
 
                 {/* Navigation Links */}
@@ -56,6 +56,15 @@ export default function Navbar() {
                         transition: 'color 0.2s'
                     }} className="nav-link">
                         About Us
+                    </Link>
+                    <Link href="/contact" style={{
+                        color: '#1a1a1a',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        fontSize: '1rem',
+                        transition: 'color 0.2s'
+                    }} className="nav-link">
+                        Contact Us
                     </Link>
                 </div>
 

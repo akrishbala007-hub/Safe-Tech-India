@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { supabase } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import dynamic from 'next/dynamic'
 
@@ -142,7 +142,7 @@ export default function Dashboard() {
 
     return (
         <div className="container" style={{ padding: '2rem 0' }}>
-            <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+            <header className="dashboard-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                 <div>
                     <h1>Welcome, {profile.shop_name || profile.name || 'Partner'}</h1>
                     <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -425,7 +425,28 @@ export default function Dashboard() {
                             </button>
                         ) : (
                             <div style={{ padding: '1rem', background: 'hsla(var(--warning), 0.1)', borderRadius: '8px', color: 'hsl(var(--warning))', marginBottom: '1rem' }}>
-                                <span style={{ fontWeight: 'bold' }}>Action Blocked:</span> Waiting for Admin Verification to upload products.
+                                <div style={{ marginBottom: '0.5rem' }}>
+                                    <span style={{ fontWeight: 'bold' }}>Action Blocked:</span> Waiting for Admin Verification to upload products.
+                                </div>
+                                {profile.role === 'dealer' && (
+                                    <a
+                                        href={`https://wa.me/919600707601?text=${encodeURIComponent('Hi, I have registered and want to complete manual payment for verification to upload products.')}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="btn"
+                                        style={{
+                                            background: 'hsl(var(--primary))',
+                                            color: '#1a1a1a',
+                                            fontSize: '0.9rem',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            textDecoration: 'none'
+                                        }}
+                                    >
+                                        💳 Verify & Pay
+                                    </a>
+                                )}
                             </div>
                         )}
 
@@ -450,7 +471,8 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     )
 }
