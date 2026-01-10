@@ -24,6 +24,27 @@ export default function Footer() {
                         </p>
                     </div>
 
+                    {/* Trust Policy Section */}
+                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center', margin: '2rem 0', padding: '2rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', width: '100%' }}>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>✅</div>
+                            <h4 style={{ color: 'white' }}>7-Day Replacement</h4>
+                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>Hardware Defect Guarantee</p>
+                        </div>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📱</div>
+                            <h4 style={{ color: 'white' }}>Manual UPI Payment</h4>
+                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>GPay / PhonePe Verified</p>
+                        </div>
+                        <div style={{ textAlign: 'center' }}>
+                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🚚</div>
+                            <h4 style={{ color: 'white' }}>Insured Shipping</h4>
+                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>via BlueDart / DTDC</p>
+                        </div>
+                    </div>
+
+                    {/* Social Links Post-Fix */}
+
                     {/* Social Links */}
                     <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
                         <a href="https://www.instagram.com/indiasafetech/" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="Instagram">
@@ -38,6 +59,13 @@ export default function Footer() {
                         <a href="https://www.linkedin.com/company/111211089/admin/dashboard/" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="LinkedIn">
                             <LinkedInIcon />
                         </a>
+                    </div>
+
+                    {/* Policy Links */}
+                    <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.9rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                        <Link href="/terms-and-conditions" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms & Conditions</Link>
+                        <Link href="/refund-policy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Refund & Replacement Policy</Link>
+                        <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Contact Support</Link>
                     </div>
 
                     {/* Copyright */}

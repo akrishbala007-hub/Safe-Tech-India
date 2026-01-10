@@ -39,6 +39,15 @@ export default function Navbar() {
                     }} className="nav-link">
                         Home
                     </Link>
+                    <Link href="/products" style={{
+                        color: '#1a1a1a',
+                        textDecoration: 'none',
+                        fontWeight: '600',
+                        fontSize: '1rem',
+                        transition: 'color 0.2s'
+                    }} className="nav-link">
+                        Products
+                    </Link>
                     <Link href="/service-engineer" style={{
                         color: '#1a1a1a',
                         textDecoration: 'none',
@@ -75,31 +84,40 @@ export default function Navbar() {
                     gap: '0.75rem',
                     flexWrap: 'wrap'
                 }}>
+                    <Link href="/login?role=admin" style={{
+                        color: '#666',
+                        textDecoration: 'none',
+                        fontSize: '0.9rem',
+                        fontWeight: '600',
+                        marginRight: '0.5rem'
+                    }}>
+                        Admin Login
+                    </Link>
                     <Link href="/login" style={{
-                        padding: '0.6rem 1.5rem',
+                        padding: '0.6rem 1.2rem',
                         background: 'white',
                         color: '#1a1a1a',
                         border: '2px solid #1a1a1a',
                         borderRadius: '8px',
                         textDecoration: 'none',
                         fontWeight: '700',
-                        fontSize: '0.95rem',
+                        fontSize: '0.9rem',
                         transition: 'all 0.2s'
                     }} className="nav-btn">
                         Login
                     </Link>
                     <Link href="/register" style={{
-                        padding: '0.6rem 1.5rem',
+                        padding: '0.6rem 1.2rem',
                         background: '#FDB813',
                         color: '#1a1a1a',
                         border: '2px solid #FDB813',
                         borderRadius: '8px',
                         textDecoration: 'none',
                         fontWeight: '700',
-                        fontSize: '0.95rem',
+                        fontSize: '0.9rem',
                         transition: 'all 0.2s'
                     }} className="nav-btn-primary">
-                        Get Started
+                        Dealer Registration
                     </Link>
                 </div>
             </div>

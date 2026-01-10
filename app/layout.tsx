@@ -7,7 +7,9 @@ export const metadata: Metadata = {
   title: 'Safe Tech India',
   description: "India's #1 Dedicated Marketplace for Computer Dealers & Wholesalers. Buy & Sell Refurbished Laptops, Desktops & Accessories.",
   icons: {
-    icon: '/logo.png',
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/logo.png',
   },
   openGraph: {
     type: 'website',
@@ -25,7 +27,10 @@ export const metadata: Metadata = {
     description: "India's trusted marketplace for refurbished computers.",
     images: ['/logo.png'],
   },
-  keywords: ['Refurbished Laptops', 'Computer Dealers India', 'B2B Marketplace', 'Safe Tech India']
+  keywords: ['Refurbished Laptops', 'Computer Dealers India', 'B2B Marketplace', 'Safe Tech India'],
+  verification: {
+    google: 'google-site-verification=YOUR_VERIFICATION_CODE', // Replace with your code
+  }
 }
 
 export default function RootLayout({

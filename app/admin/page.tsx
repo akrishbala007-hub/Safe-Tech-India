@@ -8,7 +8,7 @@ import SuggestDealerModal from '@/components/SuggestDealerModal'
 
 export default function AdminDashboard() {
     const router = useRouter()
-    const [activeTab, setActiveTab] = useState<'dealers' | 'requests' | 'users' | 'leads' | 'engineers'>('dealers')
+    const [activeTab, setActiveTab] = useState<'dealers' | 'requests' | 'users' | 'leads' | 'engineers' | 'products'>('products')
     const [showSuggestModal, setShowSuggestModal] = useState(false)
     const [selectedRequest, setSelectedRequest] = useState<any>(null)
 
@@ -18,6 +18,8 @@ export default function AdminDashboard() {
     const [productRequirements, setProductRequirements] = useState<any[]>([]) // NEW
     const [engineers, setEngineers] = useState<any[]>([])
     const [users, setUsers] = useState<any[]>([])
+
+    const [products, setProducts] = useState<any[]>([]) // NEW
 
     const [loading, setLoading] = useState(true)
 
@@ -54,10 +56,6 @@ export default function AdminDashboard() {
 
         if (sReqError) console.error('Error fetching service requests:', sReqError)
 
-        // Manual join fallback if direct select relation fails (it often does if foreign key name is ambiguous)
-        // For safety, let's keep the manual mapping or try to optimize. 
-        // Actually, let's stick to the manual mapping pattern for reliability in this specific codebase context.
-
         if (sReqs) {
             const detailedSReqs = await Promise.all(sReqs.map(async (r) => {
                 const { data: u } = await supabase.from('profiles').select('name, phone, email').eq('id', r.user_id).single()
@@ -83,7 +81,27 @@ export default function AdminDashboard() {
             setProductRequirements(detailedPReqs)
         }
 
+        // 4. Fetch Products
+        const { data: prodData, error: prodError } = await supabase
+            .from('products')
+            .select('*, profiles(shop_name)')
+            .order('created_at', { ascending: false })
+
+        if (prodData) setProducts(prodData)
+
         setLoading(false)
+    }
+
+    const deleteProduct = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this product?')) return
+
+        const { error } = await supabase.from('products').delete().eq('id', id)
+        if (error) {
+            alert('Error deleting product: ' + error.message)
+        } else {
+            alert('Product deleted successfully')
+            fetchData()
+        }
     }
 
     const toggleVerification = async (dealerId: string, currentStatus: boolean) => {
@@ -151,7 +169,6 @@ export default function AdminDashboard() {
         }
     }
 
-
     const [suggestTarget, setSuggestTarget] = useState<'service' | 'product'>('service')
 
     const openSuggestModal = (request: any, type: 'service' | 'product') => {
@@ -161,6 +178,7 @@ export default function AdminDashboard() {
     }
 
     const handleSuggestSubmit = async (selectedDealerIds: string[]) => {
+        // ... existing implementation ...
         if (!selectedRequest) return
         console.log('--- STARTING DEALER SUGGESTION ---', { type: suggestTarget, id: selectedRequest.id, dealers: selectedDealerIds })
 
@@ -187,32 +205,21 @@ export default function AdminDashboard() {
                     requirement_id: selectedRequest.id,
                     dealer_id: id
                 }))
-                console.log('Requirement Insert Payload:', insertPayload)
 
                 const { error: insertError } = await supabase
                     .from('requirement_dealers')
                     .upsert(insertPayload, { onConflict: 'requirement_id, dealer_id', ignoreDuplicates: true })
 
-                if (insertError) {
-                    console.error('Requirement Insert Error:', insertError)
-                    throw insertError
-                }
+                if (insertError) throw insertError
 
-                console.log('Updating requirement status to responded...')
-                const { error: updateError, data: updateData } = await supabase
+                const { error: updateError } = await supabase
                     .from('requirements')
                     .update({ status: 'responded' })
                     .eq('id', selectedRequest.id)
-                    .select()
 
-                if (updateError) {
-                    console.error('Requirement Update Error:', updateError)
-                    throw updateError
-                }
-                console.log('Update Success Result:', updateData)
+                if (updateError) throw updateError
             }
 
-            console.log('Successfully processed suggestion')
             setShowSuggestModal(false)
             fetchData()
 
@@ -238,6 +245,10 @@ export default function AdminDashboard() {
                 <div className="glass-card" onClick={() => setActiveTab('dealers')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
                     <h3>Total Dealers</h3>
                     <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{dealers.length}</p>
+                </div>
+                <div className="glass-card" onClick={() => setActiveTab('products')} style={{ cursor: 'pointer', transition: 'transform 0.2s', border: activeTab === 'products' ? '2px solid #FDB813' : 'none' }}>
+                    <h3>Inventory</h3>
+                    <p style={{ fontSize: '2rem', fontWeight: 'bold', color: '#FDB813' }}>{products.length}</p>
                 </div>
                 <div className="glass-card" onClick={() => setActiveTab('engineers')} style={{ cursor: 'pointer', transition: 'transform 0.2s' }}>
                     <h3>Service Engineers</h3>
@@ -268,38 +279,76 @@ export default function AdminDashboard() {
             </div>
 
             {/* Tabs */}
-            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid rgba(255,255,255,0.1)' }}>
-                <button
-                    onClick={() => setActiveTab('dealers')}
-                    style={getTabStyle('dealers', activeTab)}
-                >
-                    Dealers ({dealers.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('engineers')}
-                    style={getTabStyle('engineers', activeTab)}
-                >
-                    Engineers ({engineers.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('users')}
-                    style={getTabStyle('users', activeTab)}
-                >
-                    Users ({users.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('requests')}
-                    style={getTabStyle('requests', activeTab)}
-                >
-                    Service Requests ({serviceRequests.length})
-                </button>
-                <button
-                    onClick={() => setActiveTab('leads')}
-                    style={getTabStyle('leads', activeTab)}
-                >
-                    Product Leads ({productRequirements.length})
-                </button>
+            <div style={{ display: 'flex', gap: '1rem', marginBottom: '2rem', borderBottom: '2px solid rgba(255,255,255,0.1)', overflowX: 'auto' }}>
+                <button onClick={() => setActiveTab('products')} style={getTabStyle('products', activeTab)}>Products ({products.length})</button>
+                <button onClick={() => setActiveTab('dealers')} style={getTabStyle('dealers', activeTab)}>Dealers ({dealers.length})</button>
+                <button onClick={() => setActiveTab('engineers')} style={getTabStyle('engineers', activeTab)}>Engineers ({engineers.length})</button>
+                <button onClick={() => setActiveTab('users')} style={getTabStyle('users', activeTab)}>Users ({users.length})</button>
+                <button onClick={() => setActiveTab('requests')} style={getTabStyle('requests', activeTab)}>Requests ({serviceRequests.length})</button>
+                <button onClick={() => setActiveTab('leads')} style={getTabStyle('leads', activeTab)}>Leads ({productRequirements.length})</button>
             </div>
+
+            {/* Products Table (NEW) */}
+            {activeTab === 'products' && (
+                <div className="glass-card" style={{ padding: '0', overflow: 'hidden' }}>
+                    <div style={{ padding: '1rem', borderBottom: '1px solid rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                        <h3>Managed Inventory</h3>
+                        <button
+                            onClick={() => router.push('/admin/inventory/add')}
+                            className="btn"
+                            style={{ background: '#FDB813', color: 'black', fontWeight: 'bold' }}
+                        >
+                            + Add Product
+                        </button>
+                    </div>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+                        <thead style={{ background: 'rgba(255,255,255,0.05)' }}>
+                            <tr>
+                                <th style={thStyle}>Product</th>
+                                <th style={thStyle}>Price</th>
+                                <th style={thStyle}>Safe Tech Price</th>
+                                <th style={thStyle}>Dealer</th>
+                                <th style={thStyle}>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {products.map((p: any) => (
+                                <tr key={p.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                    <td style={{ padding: '1rem' }}>
+                                        <div style={{ fontWeight: 'bold' }}>{p.title}</div>
+                                        <div style={{ fontSize: '0.8rem', opacity: 0.7 }}>{p.category} - {p.condition}</div>
+                                    </td>
+                                    <td style={{ padding: '1rem' }}>₹{p.price}</td>
+                                    <td style={{ padding: '1rem' }}>
+                                        {p.safe_tech_price ? (
+                                            <span style={{ color: '#25D366', fontWeight: 'bold' }}>₹{p.safe_tech_price}</span>
+                                        ) : '-'}
+                                    </td>
+                                    <td style={{ padding: '1rem' }}>
+                                        {p.profiles?.shop_name || 'N/A'}
+                                    </td>
+                                    <td style={{ padding: '1rem', display: 'flex', gap: '0.5rem' }}>
+                                        {/* Edit Button */}
+                                        <button
+                                            onClick={() => router.push(`/admin/inventory/edit/${p.id}`)}
+                                            style={{ cursor: 'pointer', background: 'none', border: '1px solid #3b82f6', color: '#3b82f6', padding: '0.4rem 0.8rem', borderRadius: '4px' }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            onClick={() => deleteProduct(p.id)}
+                                            style={{ cursor: 'pointer', background: 'none', border: '1px solid #ef4444', color: '#ef4444', padding: '0.4rem 0.8rem', borderRadius: '4px' }}
+                                        >
+                                            Delete
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    {products.length === 0 && <div style={{ padding: '4rem', textAlign: 'center', color: 'var(--text-muted)' }}>No products in inventory. Start adding!</div>}
+                </div>
+            )}
 
             {/* Dealers Table */}
             {activeTab === 'dealers' && (
