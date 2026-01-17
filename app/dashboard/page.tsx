@@ -430,7 +430,7 @@ export default function Dashboard() {
                                 </div>
                                 {profile.role === 'dealer' && (
                                     <a
-                                        href={`https://wa.me/919600707601?text=${encodeURIComponent('Hi, I have registered and want to complete manual payment for verification to upload products.')}`}
+                                        href={`https://wa.me/919600707601?text=${encodeURIComponent('Hi, I have registered and want to request verification to upload products.')}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="btn"
@@ -444,7 +444,7 @@ export default function Dashboard() {
                                             textDecoration: 'none'
                                         }}
                                     >
-                                        💳 Verify & Pay
+                                        ✅ Request Verification
                                     </a>
                                 )}
                             </div>
