@@ -20,28 +20,11 @@ export default function Footer() {
                     <div>
                         <h2 style={{ color: 'white', marginBottom: '0.5rem' }}>Safe Tech India</h2>
                         <p style={{ color: 'rgba(255,255,255,0.6)' }}>
-                            India's #1 Dedicated B2B & B2C Marketplace for Computer Dealers
+                            SafeTech India: The Digital Infrastructure for the Computer Industry.
                         </p>
                     </div>
 
-                    {/* Trust Policy Section */}
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', justifyContent: 'center', margin: '2rem 0', padding: '2rem', background: 'rgba(255,255,255,0.05)', borderRadius: '12px', width: '100%' }}>
-                        <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>✅</div>
-                            <h4 style={{ color: 'white' }}>7-Day Replacement</h4>
-                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>Hardware Defect Guarantee</p>
-                        </div>
-                        <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>📱</div>
-                            <h4 style={{ color: 'white' }}>Manual UPI Payment</h4>
-                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>GPay / PhonePe Verified</p>
-                        </div>
-                        <div style={{ textAlign: 'center' }}>
-                            <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🚚</div>
-                            <h4 style={{ color: 'white' }}>Insured Shipping</h4>
-                            <p style={{ fontSize: '0.8rem', color: '#aaa' }}>via BlueDart / DTDC</p>
-                        </div>
-                    </div>
+
 
                     {/* Social Links Post-Fix */}
 
@@ -62,10 +45,14 @@ export default function Footer() {
                     </div>
 
                     {/* Policy Links */}
-                    <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.9rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                        <Link href="/terms-and-conditions" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms & Conditions</Link>
-                        <Link href="/refund-policy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Refund & Replacement Policy</Link>
-                        <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Contact Support</Link>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem' }}>
+                        <h4 style={{ color: 'white', marginBottom: '0.5rem' }}>Legal</h4>
+                        <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.9rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                            <Link href="/privacy-policy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Privacy Policy</Link>
+                            <Link href="/terms-and-conditions" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Terms of Service</Link>
+                            <Link href="/refund-policy" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Refund & Cancellation Policy</Link>
+                            <Link href="/contact" style={{ color: 'rgba(255,255,255,0.6)', textDecoration: 'none' }}>Contact Us</Link>
+                        </div>
                     </div>
 
                     {/* Copyright */}

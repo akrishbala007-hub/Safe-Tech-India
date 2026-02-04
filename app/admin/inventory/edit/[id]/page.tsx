@@ -216,6 +216,17 @@ export default function EditInventoryPage({ params }: { params: Promise<{ id: st
                         </div>
                         <select
                             className="input-field"
+                            value={formData.category}
+                            onChange={e => setFormData({ ...formData, category: e.target.value })}
+                            required
+                        >
+                            <option>Refurbished laptops / Desktop</option>
+                            <option>Brand New laptops / Desktop</option>
+                            <option>Computer accessories</option>
+                            <option>RAM / SSD & Graphics Card</option>
+                        </select>
+                        <select
+                            className="input-field"
                             value={formData.condition}
                             onChange={e => setFormData({ ...formData, condition: e.target.value })}
                             required

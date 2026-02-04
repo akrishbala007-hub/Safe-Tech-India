@@ -4,8 +4,8 @@ import WhatsAppFloat from '@/components/WhatsAppFloat'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Safe Tech India',
-  description: "India's #1 Dedicated Marketplace for Computer Dealers & Wholesalers. Buy & Sell Refurbished Laptops, Desktops & Accessories.",
+  title: 'SafeTech India | The Digital Ecosystem for Computer Dealers',
+  description: "The ultimate platform for New & Refurbished laptop dealers. Get your professional digital storefront, direct WhatsApp leads, and B2B networking for ₹499/year.",
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon.ico',

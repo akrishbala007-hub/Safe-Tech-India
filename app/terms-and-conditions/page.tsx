@@ -2,37 +2,27 @@
 export default function TermsAndConditions() {
     return (
         <div className="container" style={{ padding: '4rem 1rem', maxWidth: '800px', margin: '0 auto' }}>
-            <h1 style={{ marginBottom: '2rem' }}>Service Agreement & Terms of Use</h1>
+            <h1 style={{ marginBottom: '2rem' }}>Terms of Service</h1>
+            <p style={{ marginBottom: '2rem' }}>By registering as a Dealer on safetechindia.org.in, you agree to:</p>
 
             <section style={{ marginBottom: '2rem' }}>
-                <h2>The Service</h2>
-                <p>Safe Tech India acts as a "Technology Auditor." We do not manufacture laptops. We source, inspect, and certify pre-owned devices from a verified network of wholesale partners.</p>
+                <h2>Eligibility</h2>
+                <p>You are a legitimate dealer of computer hardware or electronics.</p>
             </section>
 
             <section style={{ marginBottom: '2rem' }}>
-                <h2>Verification Guarantee</h2>
-                <p>Every device listed as "Verified" has passed our 30-point hardware audit. This audit reflects the state of the device at the time of inspection.</p>
+                <h2>Service Scope</h2>
+                <p>SafeTech provides a digital showroom platform. We are not responsible for the quality, warranty, or delivery of products sold by dealers to their customers.</p>
             </section>
 
             <section style={{ marginBottom: '2rem' }}>
-                <h2>Pricing</h2>
-                <p>Prices listed include the cost of the hardware, the Safe Tech Audit Fee, and a limited service warranty.</p>
-            </section>
-
-            <section style={{ marginBottom: '2rem' }}>
-                <h2>Payment</h2>
-                <p>We currently accept manual UPI payments (GPay/PhonePe). Orders are only processed once the payment is confirmed.</p>
+                <h2>Subscription</h2>
+                <p>The ₹499 fee covers platform access for one year. Safe Tech reserves the right to suspend accounts found engaging in fraudulent activities.</p>
             </section>
 
             <section style={{ marginBottom: '2rem' }}>
                 <h2>Liability</h2>
-                <p>Safe Tech India is not liable for data loss. We strongly recommend users back up their data regularly. Our total liability is limited to the amount paid for the specific device.</p>
-            </section>
-
-            <section style={{ marginBottom: '2rem' }}>
-                <h2>Privacy Policy Data Usage</h2>
-                <p>We only collect your Name, Phone Number, and Address to process your order and provide service support.</p>
-                <p><strong>Third-Party Sharing:</strong> We do not sell your data. Your address is shared only with our shipping partners (e.g., BlueDart/DTDC) for delivery.</p>
+                <p>Safe Tech is not liable for any disputes arising between dealers and buyers.</p>
             </section>
         </div>
     )

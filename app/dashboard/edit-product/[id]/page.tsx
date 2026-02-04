@@ -181,11 +181,10 @@ export default function EditProduct() {
                                 value={form.category}
                                 onChange={e => setForm({ ...form, category: e.target.value })}
                             >
-                                <option>Laptop</option>
-                                <option>Desktop</option>
-                                <option>Monitor</option>
-                                <option>Accessories</option>
-                                <option>Components (RAM/SSD)</option>
+                                <option>Refurbished laptops / Desktop</option>
+                                <option>Brand New laptops / Desktop</option>
+                                <option>Computer accessories</option>
+                                <option>RAM / SSD & Graphics Card</option>
                             </select>
                         </div>
                         <div>

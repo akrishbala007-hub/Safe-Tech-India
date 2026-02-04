@@ -22,8 +22,10 @@ export default function ContactPage() {
         },
         "address": {
             "@type": "PostalAddress",
-            "streetAddress": "Ritchie Street, Anna Salai",
-            "addressLocality": "Chennai",
+            "streetAddress": "D.NO.1288/2 Trichy Road, Race Course",
+            "addressLocality": "Coimbatore",
+            "postalCode": "641018",
+            "addressRegion": "TN",
             "addressCountry": "IN"
         }
     }
@@ -90,10 +92,22 @@ export default function ContactPage() {
 
                         <div style={{ marginTop: '2rem', textAlign: 'center' }}>
                             <p style={{ fontWeight: '600', marginBottom: '0.5rem' }}>Other Ways to Reach Us</p>
-                            <a href="mailto:support@safetechindia.org.in" style={{ color: 'var(--primary-dark)', textDecoration: 'none', display: 'block', marginBottom: '0.5rem' }}>
-                                ✉️ support@safetechindia.org.in
-                            </a>
-                            <p style={{ color: '#555' }}>📞 Support Hours: 10 AM - 7 PM</p>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <p style={{ fontWeight: '600', color: '#333' }}>Business Name</p>
+                                <p style={{ color: '#555' }}>Safe Tech India</p>
+                            </div>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <p style={{ fontWeight: '600', color: '#333' }}>Office Address</p>
+                                <p style={{ color: '#555' }}>D.NO.1288/2 Trichy Road, Race Course Coimbatore TN-641018</p>
+                            </div>
+                            <div style={{ marginBottom: '1rem' }}>
+                                <p style={{ fontWeight: '600', color: '#333' }}>Contact</p>
+                                <a href="mailto:support@safetechindia.org.in" style={{ color: 'var(--primary-dark)', textDecoration: 'none', display: 'block' }}>
+                                    ✉️ support@safetechindia.org.in
+                                </a>
+                                <p style={{ color: '#555' }}>📞 +91 9600707601</p>
+                            </div>
+                            <p style={{ color: '#555' }}>🕒 10:00 AM to 6:00 PM (Monday to Saturday)</p>
                         </div>
                     </div>
 
