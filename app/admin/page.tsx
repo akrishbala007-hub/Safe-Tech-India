@@ -104,6 +104,44 @@ export default function AdminDashboard() {
         }
     }
 
+    const deleteProfile = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this user and all their associated data? This action cannot be undone.')) return
+
+        setLoading(true)
+        try {
+            // 1. Delete associations first
+            await supabase.from('requirement_dealers').delete().eq('dealer_id', id)
+            await supabase.from('request_dealers').delete().eq('dealer_id', id)
+            await supabase.from('leads').delete().eq('dealer_id', id)
+
+            // 2. Delete products (and their leads)
+            const { data: prods } = await supabase.from('products').select('id').eq('dealer_id', id)
+            if (prods && prods.length > 0) {
+                const prodIds = prods.map(p => p.id)
+                await supabase.from('leads').delete().in('product_id', prodIds)
+                await supabase.from('products').delete().in('id', prodIds)
+            }
+
+            // 3. Delete service requests and requirements
+            await supabase.from('service_requests').delete().eq('user_id', id)
+            await supabase.from('service_requests').delete().eq('assigned_engineer_id', id)
+            await supabase.from('requirements').delete().eq('user_id', id)
+
+            // 4. Finally delete the profile
+            const { error } = await supabase.from('profiles').delete().eq('id', id)
+
+            if (error) throw error
+
+            alert('User deleted successfully')
+            fetchData()
+        } catch (error: any) {
+            console.error('Delete User Error:', error)
+            alert('Error deleting user: ' + error.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
     const toggleVerification = async (dealerId: string, currentStatus: boolean) => {
         // Use RPC to verify (Admins Only)
         const { error } = await supabase.rpc('toggle_dealer_verification', {
@@ -430,6 +468,19 @@ export default function AdminDashboard() {
                                         >
                                             {dealer.subscription_status === 'active' ? 'Mark Unpaid' : 'Mark Paid'}
                                         </button>
+                                        <button
+                                            onClick={() => deleteProfile(dealer.id)}
+                                            className="btn"
+                                            style={{
+                                                padding: '0.5rem',
+                                                fontSize: '0.8rem',
+                                                background: 'hsla(var(--destructive), 0.1)',
+                                                color: 'hsl(var(--destructive))',
+                                                border: '1px solid hsl(var(--destructive))'
+                                            }}
+                                        >
+                                            Delete 🗑️
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -449,6 +500,7 @@ export default function AdminDashboard() {
                                 <th style={thStyle}>Phone Number</th>
                                 <th style={thStyle}>Location</th>
                                 <th style={thStyle}>Joined</th>
+                                <th style={thStyle}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -467,6 +519,21 @@ export default function AdminDashboard() {
                                     </td>
                                     <td style={{ padding: '1rem', opacity: 0.7 }}>
                                         {new Date(user.created_at).toLocaleDateString()}
+                                    </td>
+                                    <td style={{ padding: '1rem' }}>
+                                        <button
+                                            onClick={() => deleteProfile(user.id)}
+                                            className="btn"
+                                            style={{
+                                                padding: '0.5rem',
+                                                fontSize: '0.8rem',
+                                                background: 'hsla(var(--destructive), 0.1)',
+                                                color: 'hsl(var(--destructive))',
+                                                border: '1px solid hsl(var(--destructive))'
+                                            }}
+                                        >
+                                            Delete 🗑️
+                                        </button>
                                     </td>
                                 </tr>
                             ))}
@@ -676,6 +743,20 @@ export default function AdminDashboard() {
                                             }}
                                         >
                                             {engineer.is_verified ? 'Revoke ❌' : 'Approve ✅'}
+                                        </button>
+                                        <button
+                                            onClick={() => deleteProfile(engineer.id)}
+                                            className="btn"
+                                            style={{
+                                                padding: '0.5rem',
+                                                fontSize: '0.8rem',
+                                                background: 'hsla(var(--destructive), 0.1)',
+                                                color: 'hsl(var(--destructive))',
+                                                border: '1px solid hsl(var(--destructive))',
+                                                marginLeft: '0.5rem'
+                                            }}
+                                        >
+                                            Delete 🗑️
                                         </button>
                                     </td>
                                 </tr>
