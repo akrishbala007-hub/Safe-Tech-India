@@ -124,15 +124,29 @@ export default async function ProductPage({ params }: { params: Promise<{ id: st
                         </div>
 
                         <div style={{ marginBottom: '2rem' }}>
-                            <h3 style={{ marginBottom: '1rem' }}>Specifications</h3>
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                                {Object.entries(product.specs || {}).map(([key, val]: [string, any]) => (
-                                    <div key={key} style={{ padding: '0.5rem', borderBottom: '1px solid #eee' }}>
-                                        <span style={{ color: '#888', textTransform: 'capitalize' }}>{key}: </span>
-                                        <strong>{val}</strong>
-                                    </div>
-                                ))}
-                            </div>
+                            <h3 style={{ marginBottom: '1rem' }}>Product Details</h3>
+                            {product.specs?.description ? (
+                                <div style={{
+                                    whiteSpace: 'pre-wrap',
+                                    color: '#444',
+                                    lineHeight: '1.6',
+                                    background: '#fff',
+                                    padding: '1.5rem',
+                                    borderRadius: '12px',
+                                    border: '1px solid #eee'
+                                }}>
+                                    {product.specs.description}
+                                </div>
+                            ) : (
+                                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                                    {Object.entries(product.specs || {}).map(([key, val]: [string, any]) => (
+                                        <div key={key} style={{ padding: '0.5rem', borderBottom: '1px solid #eee' }}>
+                                            <span style={{ color: '#888', textTransform: 'capitalize' }}>{key}: </span>
+                                            <strong>{val}</strong>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

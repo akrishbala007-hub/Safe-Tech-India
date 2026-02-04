@@ -16,7 +16,7 @@ export default function EditInventoryPage({ params }: { params: Promise<{ id: st
         safe_tech_price: '',
         category: 'Laptop',
         condition: 'Refurbished Grade A',
-        specs: { processor: '', ram: '', storage: '' },
+        description: '', // Replaces structured specs
     })
 
     // Unwrap params properly using React.use() or await if async component, but this is client component so we use useEffect to unwrap or wait if it was passed as prop? 
@@ -45,7 +45,7 @@ export default function EditInventoryPage({ params }: { params: Promise<{ id: st
                 safe_tech_price: data.safe_tech_price || '',
                 category: data.category || 'Laptop',
                 condition: data.condition || 'Refurbished Grade A',
-                specs: data.specs || { processor: '', ram: '', storage: '' }
+                description: data.specs?.description || (data.specs ? Object.values(data.specs).join(' ') : '')
             })
             // If existing audit data, use it. Else default to all true (or empty if you prefer)
             // User requested default is true for ADD, for EDIT it should probably be what it was.
@@ -141,7 +141,7 @@ export default function EditInventoryPage({ params }: { params: Promise<{ id: st
                 safe_tech_price: Number(formData.safe_tech_price),
                 category: formData.category,
                 condition: formData.condition,
-                specs: formData.specs,
+                specs: { description: formData.description },
                 inspection_data: auditData,
             }
 
@@ -220,74 +220,70 @@ export default function EditInventoryPage({ params }: { params: Promise<{ id: st
                             onChange={e => setFormData({ ...formData, category: e.target.value })}
                             required
                         >
-                            <option>Refurbished laptops / Desktop</option>
-                            <option>Brand New laptops / Desktop</option>
-                            <option>Computer accessories</option>
-                            <option>RAM / SSD & Graphics Card</option>
+                            <option>Refurbished Laptops / Desktop</option>
+                            <option>New Laptop</option>
+                            <option>Computer Hardware</option>
+                            <option>Accessories</option>
                         </select>
-                        <select
-                            className="input-field"
-                            value={formData.condition}
-                            onChange={e => setFormData({ ...formData, condition: e.target.value })}
-                            required
-                        >
-                            <option value="Refurbished Grade A">Refurbished Grade A</option>
-                            <option value="Refurbished Grade A+">Refurbished Grade A+</option>
-                            <option value="Refurbished Grade A++">Refurbished Grade A++</option>
-                            <option value="Refurbished Grade A+++">Refurbished Grade A+++</option>
-                            <option value="Refurbished Grade A++++">Refurbished Grade A++++</option>
-                        </select>
+                        {formData.category.includes('Refurbished') && (
+                            <select
+                                className="input-field"
+                                value={formData.condition}
+                                onChange={e => setFormData({ ...formData, condition: e.target.value })}
+                                required
+                            >
+                                <option value="Refurbished Grade A">Refurbished Grade A</option>
+                                <option value="Refurbished Grade A+">Refurbished Grade A+</option>
+                                <option value="Refurbished Grade A++">Refurbished Grade A++</option>
+                                <option value="Refurbished Grade A+++">Refurbished Grade A+++</option>
+                                <option value="Refurbished Grade A++++">Refurbished Grade A++++</option>
+                            </select>
+                        )}
                     </div>
                 </section>
 
-                {/* Specs */}
+                {/* Specs / Description */}
                 <section className="glass-card" style={{ padding: '1.5rem', background: 'white' }}>
-                    <h3 style={{ marginBottom: '1rem' }}>⚙️ Specifications</h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
-                        <input
-                            placeholder="Processor (i5/M1)"
-                            className="input-field"
-                            value={formData.specs.processor}
-                            onChange={e => setFormData({ ...formData, specs: { ...formData.specs, processor: e.target.value } })}
-                        />
-                        <input
-                            placeholder="RAM (8GB)"
-                            className="input-field"
-                            value={formData.specs.ram}
-                            onChange={e => setFormData({ ...formData, specs: { ...formData.specs, ram: e.target.value } })}
-                        />
-                        <input
-                            placeholder="Storage (256GB)"
-                            className="input-field"
-                            value={formData.specs.storage}
-                            onChange={e => setFormData({ ...formData, specs: { ...formData.specs, storage: e.target.value } })}
-                        />
+                    <h3 style={{ marginBottom: '1rem' }}>📝 Description</h3>
+                    <textarea
+                        placeholder="Enter detailed description (Max 3000 characters)..."
+                        className="input-field"
+                        style={{ minHeight: '150px', resize: 'vertical' }}
+                        maxLength={3000}
+                        required
+                        value={formData.description}
+                        onChange={e => setFormData({ ...formData, description: e.target.value })}
+                    />
+                    <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#888', marginTop: '0.5rem' }}>
+                        {formData.description.length} / 3000
                     </div>
                 </section>
 
-                {/* 30-Point Audit */}
-                <section className="glass-card" style={{ padding: '1.5rem', background: '#f8fafc' }}>
-                    <h3 style={{ marginBottom: '1.5rem', color: '#1a1a1a' }}>🛡️ 30-Point Safe Tech Audit</h3>
+                {/* 30-Point Audit - Only for Refurbished */}
+                {formData.category.includes('Refurbished') && (
+                    <section className="glass-card" style={{ padding: '1.5rem', background: '#f8fafc' }}>
+                        <h3 style={{ marginBottom: '1.5rem', color: '#1a1a1a' }}>🛡️ 30-Point Safe Tech Audit</h3>
 
-                    {Object.entries(categories).map(([category, items]) => (
-                        <div key={category} style={{ marginBottom: '2rem' }}>
-                            <h4 style={{ marginBottom: '1rem', color: '#555', borderBottom: '1px solid #ddd', paddingBottom: '0.5rem' }}>{category}</h4>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                                {items.map(item => (
-                                    <label key={item} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem' }}>
-                                        <input
-                                            type="checkbox"
-                                            style={{ width: '18px', height: '18px', accentColor: '#25D366' }}
-                                            checked={auditData[category]?.[item] === true}
-                                            onChange={(e) => handleAuditChange(category, item, e.target.checked)}
-                                        />
-                                        {item}
-                                    </label>
-                                ))}
+                        {Object.entries(categories).map(([category, items]) => (
+                            <div key={category} style={{ marginBottom: '2rem' }}>
+                                <h4 style={{ marginBottom: '1rem', color: '#555', borderBottom: '1px solid #ddd', paddingBottom: '0.5rem' }}>{category}</h4>
+                                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                                    {items.map(item => (
+                                        <label key={item} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontSize: '0.9rem' }}>
+                                            <input
+                                                type="checkbox"
+                                                style={{ width: '18px', height: '18px', accentColor: '#25D366' }}
+                                                checked={auditData[category]?.[item] === true}
+                                                onChange={(e) => handleAuditChange(category, item, e.target.checked)}
+                                            />
+                                            {item}
+                                        </label>
+                                    ))}
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </section>
+                        ))}
+                    </section>
+                )}
 
                 <button
                     type="submit"

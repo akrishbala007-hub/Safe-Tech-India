@@ -1,4 +1,5 @@
 import ContactForm from '@/components/ContactForm'
+import IndiaPresence from '@/components/IndiaPresence'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -113,36 +114,7 @@ export default function ContactPage() {
 
                     {/* Locations Section */}
                     <div style={{ flex: '1 1 500px' }}>
-                        <h2 style={{ marginBottom: '2rem' }}>Our Presence</h2>
-
-                        <div className="responsive-grid-2" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
-                            <LocationCity name="Chennai (HQ)" address="Ritchie Street, Anna Salai" isHq />
-                            <LocationCity name="Coimbatore" address="Gandhipuram / 100 Feet Road" />
-                            <LocationCity name="Bangalore" />
-                            <LocationCity name="Delhi" />
-                            <LocationCity name="Mumbai" />
-                            <LocationCity name="Hyderabad" />
-                            <LocationCity name="Pune" />
-                        </div>
-
-                        {/* Map (Placeholder for Chennai) */}
-                        <div style={{
-                            borderRadius: '12px',
-                            overflow: 'hidden',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
-                            height: '300px',
-                            background: '#eee'
-                        }}>
-                            <iframe
-                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.633785233189!2d80.2691923153655!3d13.064560919313416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a526610fc2b3f57%3A0xc3f6a29e92506e78!2sRitchie%20St%2C%20Chintadripet%2C%20Chennai%2C%20Tamil%20Nadu!5e0!3m2!1sen!2sin!4v1677654321098!5m2!1sen!2sin"
-                                width="100%"
-                                height="100%"
-                                style={{ border: 0 }}
-                                allowFullScreen
-                                loading="lazy"
-                                referrerPolicy="no-referrer-when-downgrade"
-                            />
-                        </div>
+                        <IndiaPresence />
                     </div>
                 </div>
             </div>

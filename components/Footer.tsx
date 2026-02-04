@@ -28,20 +28,22 @@ export default function Footer() {
 
                     {/* Social Links Post-Fix */}
 
-                    {/* Social Links */}
-                    <div style={{ display: 'flex', gap: '1.5rem', alignItems: 'center' }}>
-                        <a href="https://www.instagram.com/indiasafetech/" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="Instagram">
-                            <InstagramIcon />
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=61586450992405" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="Facebook">
-                            <FacebookIcon />
-                        </a>
-                        <a href="https://www.youtube.com/@safetechindia" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="YouTube">
-                            <YouTubeIcon />
-                        </a>
-                        <a href="https://www.linkedin.com/company/111211089/admin/dashboard/" target="_blank" rel="noopener noreferrer" style={socialIconStyle} aria-label="LinkedIn">
-                            <LinkedInIcon />
-                        </a>
+                    {/* Verification & Rating */}
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1.5rem', marginBottom: '1rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#fff', padding: '0.4rem 1rem', borderRadius: '50px', boxShadow: '0 4px 10px rgba(0,0,0,0.05)' }}>
+                            <span style={{ color: '#25D366', fontWeight: 'bold' }}>🛡️ Verified Platform</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
+                            {[1, 2, 3, 4, 5].map(s => <span key={s} style={{ color: '#FECC00', fontSize: '1.2rem' }}>⭐</span>)}
+                            <span style={{ marginLeft: '0.5rem', fontWeight: '700', color: '#fff' }}>5.0 Rating</span>
+                        </div>
+                    </div>
+
+                    {/* Support Info */}
+                    <div style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '600', color: 'rgba(255,255,255,0.9)' }}>
+                        <span>📞 24/7 Support: +91 96007 07601</span>
+                        <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
+                        <span>✉️ support@safetechindia.org.in</span>
                     </div>
 
                     {/* Policy Links */}

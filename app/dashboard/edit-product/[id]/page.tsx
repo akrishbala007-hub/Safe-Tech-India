@@ -19,13 +19,8 @@ export default function EditProduct() {
         category: 'Laptop',
         condition: 'Refurbished Grade A',
         price: '',
-        image_url: '',
-        specs: {
-            processor: '',
-            ram: '',
-            storage: '',
-            warranty: ''
-        }
+        description: '', // Replaces structured specs
+        image_url: ''
     })
 
     // Check verification on mount and fetch product
@@ -66,7 +61,7 @@ export default function EditProduct() {
                         condition: product.condition,
                         price: product.price.toString(),
                         image_url: product.image_url || '',
-                        specs: product.specs || { processor: '', ram: '', storage: '', warranty: '' }
+                        description: product.specs?.description || (product.specs ? Object.values(product.specs).join(' ') : '')
                     })
                 }
             }
@@ -117,7 +112,7 @@ export default function EditProduct() {
                 condition: form.condition,
                 price: parseFloat(form.price),
                 image_url: form.image_url,
-                specs: form.specs
+                specs: { description: form.description }
             })
             .eq('id', productId)
             .eq('dealer_id', profile.id)
@@ -181,25 +176,28 @@ export default function EditProduct() {
                                 value={form.category}
                                 onChange={e => setForm({ ...form, category: e.target.value })}
                             >
-                                <option>Refurbished laptops / Desktop</option>
-                                <option>Brand New laptops / Desktop</option>
-                                <option>Computer accessories</option>
-                                <option>RAM / SSD & Graphics Card</option>
+                                <option>Refurbished Laptops / Desktop</option>
+                                <option>New Laptop</option>
+                                <option>Computer Hardware</option>
+                                <option>Accessories</option>
                             </select>
                         </div>
-                        <div>
-                            <label style={labelStyle}>Condition</label>
-                            <select
-                                style={inputStyle}
-                                value={form.condition}
-                                onChange={e => setForm({ ...form, condition: e.target.value })}
-                            >
-                                <option>New</option>
-                                <option>Refurbished Grade A</option>
-                                <option>Refurbished Grade B</option>
-                                <option>Refurbished Grade C</option>
-                            </select>
-                        </div>
+                        {form.category.includes('Refurbished') && (
+                            <div>
+                                <label style={labelStyle}>Refurbished Grade</label>
+                                <select
+                                    style={inputStyle}
+                                    value={form.condition}
+                                    onChange={e => setForm({ ...form, condition: e.target.value })}
+                                >
+                                    <option value="Refurbished Grade A">Refurbished Grade A</option>
+                                    <option value="Refurbished Grade A+">Refurbished Grade A+</option>
+                                    <option value="Refurbished Grade A++">Refurbished Grade A++</option>
+                                    <option value="Refurbished Grade A+++">Refurbished Grade A+++</option>
+                                    <option value="Refurbished Grade A++++">Refurbished Grade A++++</option>
+                                </select>
+                            </div>
+                        )}
                     </div>
 
                     <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
@@ -226,34 +224,18 @@ export default function EditProduct() {
                     </div>
                     {form.image_url && <img src={form.image_url} alt="Preview" style={{ width: '100px', borderRadius: '8px', objectFit: 'cover' }} />}
 
-                    {/* Specs Section */}
                     <div style={{ padding: '1rem', background: 'hsl(var(--input-bg))', borderRadius: '8px' }}>
-                        <h3 style={{ marginBottom: '1rem' }}>Specifications</h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                            <input
-                                placeholder="Processor (e.g. i5 8th Gen)"
-                                style={inputStyle}
-                                value={form.specs.processor}
-                                onChange={e => setForm({ ...form, specs: { ...form.specs, processor: e.target.value } })}
-                            />
-                            <input
-                                placeholder="RAM (e.g. 16GB)"
-                                style={inputStyle}
-                                value={form.specs.ram}
-                                onChange={e => setForm({ ...form, specs: { ...form.specs, ram: e.target.value } })}
-                            />
-                            <input
-                                placeholder="Storage (e.g. 512GB SSD)"
-                                style={inputStyle}
-                                value={form.specs.storage}
-                                onChange={e => setForm({ ...form, specs: { ...form.specs, storage: e.target.value } })}
-                            />
-                            <input
-                                placeholder="Warranty (e.g. 1 Month)"
-                                style={inputStyle}
-                                value={form.specs.warranty}
-                                onChange={e => setForm({ ...form, specs: { ...form.specs, warranty: e.target.value } })}
-                            />
+                        <h3 style={{ marginBottom: '1rem' }}>Description</h3>
+                        <textarea
+                            placeholder="Enter detailed description (Max 3000 characters)..."
+                            style={{ ...inputStyle, minHeight: '200px', resize: 'vertical' }}
+                            maxLength={3000}
+                            required
+                            value={form.description}
+                            onChange={e => setForm({ ...form, description: e.target.value })}
+                        />
+                        <div style={{ textAlign: 'right', fontSize: '0.8rem', color: '#888', marginTop: '0.5rem' }}>
+                            {form.description.length} / 3000
                         </div>
                     </div>
 

@@ -245,11 +245,10 @@ export default function Register() {
                             />
                             <input
                                 type="text"
-                                placeholder="GST Number"
+                                placeholder="GST Number (Not Mandatory)"
                                 className="input-field"
                                 value={formData.gstNumber}
                                 onChange={(e) => setFormData({ ...formData, gstNumber: e.target.value })}
-                                required
                             />
                         </>
                     )}

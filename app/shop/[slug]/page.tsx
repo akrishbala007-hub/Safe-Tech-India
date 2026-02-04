@@ -112,12 +112,13 @@ export default function ShopPage() {
 
             {/* Hero Section */}
             <div style={{
-                background: 'linear-gradient(to right, #0f0c29, #302b63, #24243e)',
+                background: '#FECC00',
                 padding: '6rem 2rem 4rem',
                 textAlign: 'center',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
+                borderBottom: '1px solid rgba(0,0,0,0.1)',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                color: '#1a1a1a'
             }}>
                 {/* Logo Watermark */}
                 <div style={{
@@ -128,11 +129,9 @@ export default function ShopPage() {
                     width: '600px',
                     height: '600px',
                     background: 'url(/logo.png) center/contain no-repeat',
-                    opacity: 0.1,
+                    opacity: 0.05,
                     pointerEvents: 'none',
                     zIndex: 0,
-                    filter: 'invert(1)',
-                    mixBlendMode: 'screen'
                 }} />
 
                 {/* Safe Tech India Badge */}
@@ -140,41 +139,38 @@ export default function ShopPage() {
                     position: 'absolute',
                     top: '2rem',
                     right: '2rem',
-                    background: 'rgba(0,0,0,0.5)',
-                    backdropFilter: 'blur(5px)',
+                    background: '#000',
                     padding: '0.5rem 1rem',
                     borderRadius: '50px',
-                    border: '1px solid var(--primary)',
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    color: 'white',
-                    fontSize: '0.9rem'
+                    color: '#FECC00',
+                    fontSize: '0.9rem',
+                    fontWeight: 'bold'
                 }}>
-                    <span style={{ color: 'var(--primary)', fontSize: '1.2rem' }}>🛡️</span>
-                    <span>Safe Tech India Verified</span>
+                    <span>🛡️ Safe Tech India Verified Partner</span>
                 </div>
 
                 <div className="container" style={{ maxWidth: '800px', position: 'relative', zIndex: 1 }}>
 
-                    {/* Safe Tech India Logo - Inverted to remove white bg */}
+                    {/* Safe Tech India Logo */}
                     <img
                         src="/logo.png"
                         alt="Safe Tech India"
                         style={{
                             width: '200px',
-                            marginBottom: '2rem',
-                            filter: 'invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.2))',
-                            mixBlendMode: 'screen'
+                            marginBottom: '2rem'
                         }}
                     />
 
                     {/* Avatar */}
                     <div style={{
-                        width: '120px', height: '120px', borderRadius: '50%',
+                        width: '180px', height: '180px', borderRadius: '50%',
                         overflow: 'hidden', margin: '0 auto 1.5rem',
-                        border: '4px solid var(--primary)',
-                        background: '#222'
+                        border: '6px solid #000',
+                        background: '#fff',
+                        boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
                     }}>
                         <img
                             src={dealer.avatar_url || 'https://via.placeholder.com/150?text=Shop'}
@@ -183,17 +179,18 @@ export default function ShopPage() {
                         />
                     </div>
 
-                    <h1 style={{ fontSize: '2.5rem', marginBottom: '0.5rem', color: 'white' }}>
+                    <h1 style={{ fontSize: '3rem', marginBottom: '0.5rem', color: '#000', fontWeight: '900' }}>
                         {dealer.shop_name || 'Verified Partner'}
-                        {dealer.is_verified && <span style={{ color: 'var(--primary)', marginLeft: '0.5rem', fontSize: '1.5rem' }} title="Verified">✓</span>}
+                        {dealer.is_verified && <span style={{ color: '#25D366', marginLeft: '0.5rem', fontSize: '1.8rem' }} title="Verified">✓</span>}
                     </h1>
 
-                    <p style={{ color: 'rgba(255,255,255,0.9)', fontSize: '1.1rem', marginBottom: '2rem', fontWeight: '500' }}>
+
+                    <p style={{ color: '#333', fontSize: '1.2rem', marginBottom: '2rem', fontWeight: '600' }}>
                         {dealer.address ? `📍 ${dealer.address}, ${dealer.city}` : dealer.city}
                     </p>
 
                     {dealer.description && (
-                        <p style={{ color: '#ccc', marginBottom: '2rem', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 2rem' }}>
+                        <p style={{ color: '#444', marginBottom: '2rem', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto 2rem', fontWeight: '500' }}>
                             {dealer.description}
                         </p>
                     )}
@@ -209,8 +206,8 @@ export default function ShopPage() {
                     {/* Contact Bar & Share */}
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
                         <div style={{
-                            display: 'inline-flex', gap: '2rem', background: 'rgba(255,255,255,0.05)',
-                            padding: '1rem 2rem', borderRadius: '50px', border: '1px solid rgba(255,255,255,0.1)'
+                            display: 'inline-flex', gap: '2rem', background: '#000',
+                            padding: '1rem 2rem', borderRadius: '50px', color: '#FECC00', fontWeight: 'bold'
                         }}>
                             {dealer.phone && <span>📞 {dealer.phone}</span>}
                             {dealer.whatsapp_number && <span>📱 {dealer.whatsapp_number}</span>}

@@ -1,3 +1,4 @@
+import Script from 'next/script'
 import './globals.css'
 import Footer from '@/components/Footer'
 import WhatsAppFloat from '@/components/WhatsAppFloat'
@@ -41,6 +42,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body suppressHydrationWarning>
+        <Script
+          src="https://checkout.razorpay.com/v1/checkout.js"
+          strategy="beforeInteractive"
+        />
         <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
           {children}
           <Footer />

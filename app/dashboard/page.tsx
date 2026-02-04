@@ -10,6 +10,7 @@ const RequirementModal = dynamic(() => import('@/components/RequirementModal'), 
 
 export default function Dashboard() {
     const router = useRouter()
+    const [loading, setLoading] = useState(false)
     const [profile, setProfile] = useState<any>(null)
     const [products, setProducts] = useState<any[]>([])
     const [requirements, setRequirements] = useState<any[]>([])
@@ -56,7 +57,7 @@ export default function Dashboard() {
                 }
 
                 console.log('Profile loaded:', prof)
-                setProfile(prof)
+                setProfile({ ...prof, email: user.email })
 
                 if (prof.role === 'dealer' || prof.role === 'admin') {
                     // 1. Dealer Logic
@@ -429,23 +430,84 @@ export default function Dashboard() {
                                     <span style={{ fontWeight: 'bold' }}>Action Blocked:</span> Waiting for Admin Verification to upload products.
                                 </div>
                                 {profile.role === 'dealer' && (
-                                    <a
-                                        href={`https://wa.me/919600707601?text=${encodeURIComponent('Hi, I have registered and want to request verification to upload products.')}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
+                                    <button
+                                        onClick={async () => {
+                                            try {
+                                                setLoading(true)
+                                                // 1. Create Order
+                                                const res = await fetch('/api/razorpay/create-order', {
+                                                    method: 'POST',
+                                                    headers: { 'Content-Type': 'application/json' },
+                                                    body: JSON.stringify({ amount: 1, userId: profile.id })
+                                                })
+                                                const order = await res.json()
+
+                                                if (order.error) throw new Error(order.error)
+
+                                                // 2. Open Razorpay Checkout
+                                                const options = {
+                                                    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                                                    amount: order.amount,
+                                                    currency: order.currency,
+                                                    name: 'Safe Tech India',
+                                                    description: 'Dealer Verification Fee',
+                                                    order_id: order.id,
+                                                    handler: async function (response: any) {
+                                                        // 3. Verify Payment
+                                                        const verifyRes = await fetch('/api/razorpay/verify-payment', {
+                                                            method: 'POST',
+                                                            headers: { 'Content-Type': 'application/json' },
+                                                            body: JSON.stringify({
+                                                                razorpay_order_id: response.razorpay_order_id,
+                                                                razorpay_payment_id: response.razorpay_payment_id,
+                                                                razorpay_signature: response.razorpay_signature,
+                                                                user_id: profile.id
+                                                            })
+                                                        })
+                                                        const verifyData = await verifyRes.json()
+
+                                                        if (verifyData.success) {
+                                                            alert('Payment Successful! Your account is now verified.')
+                                                            window.location.reload()
+                                                        } else {
+                                                            alert('Payment verification failed: ' + verifyData.error)
+                                                        }
+                                                    },
+                                                    prefill: {
+                                                        name: profile.shop_name || profile.name,
+                                                        email: profile.email, // Note: We might need to handle email from auth if not in profile
+                                                        contact: profile.phone
+                                                    },
+                                                    theme: { color: '#FDB813' }
+                                                };
+
+                                                const rzp = new (window as any).Razorpay(options)
+                                                rzp.open()
+                                            } catch (err: any) {
+                                                alert('Payment initialization failed: ' + err.message)
+                                            } finally {
+                                                setLoading(false)
+                                            }
+                                        }}
                                         className="btn"
                                         style={{
                                             background: 'hsl(var(--primary))',
                                             color: '#1a1a1a',
-                                            fontSize: '0.9rem',
-                                            display: 'inline-flex',
+                                            padding: '1rem',
+                                            fontSize: '1rem',
+                                            width: '100%',
+                                            display: 'flex',
                                             alignItems: 'center',
+                                            justifyContent: 'center',
                                             gap: '0.5rem',
-                                            textDecoration: 'none'
+                                            fontWeight: 'bold',
+                                            borderRadius: '8px',
+                                            border: 'none',
+                                            cursor: 'pointer'
                                         }}
                                     >
-                                        ✅ Request Verification
-                                    </a>
+                                        ✅ Verify & Pay ₹1 / Test
+                                    </button>
                                 )}
                             </div>
                         )}

@@ -43,22 +43,19 @@ export default function ProductCard({ product }: { product: any }) {
                     <span>• {product.profiles.city}</span>
                 </div>
 
-                {/* Specs Snippet */}
-                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '1.5rem' }}>
-                    {product.specs.processor && <span style={tagStyle}>{product.specs.processor}</span>}
-                    {product.specs.ram && <span style={tagStyle}>{product.specs.ram}</span>}
-                    {product.specs.storage && <span style={tagStyle}>{product.specs.storage}</span>}
+                {/* Specs/Description Snippet */}
+                <div style={{ display: 'flex', gap: '0.6rem', flexWrap: 'wrap', marginBottom: '1.5rem', overflow: 'hidden', maxHeight: '3.6em' }}>
+                    {product.specs?.processor && <span style={tagStyle}>{product.specs.processor}</span>}
+                    {product.specs?.ram && <span style={tagStyle}>{product.specs.ram}</span>}
+                    {product.specs?.storage && <span style={tagStyle}>{product.specs.storage}</span>}
+                    {!product.specs?.processor && product.specs?.description && (
+                        <p style={{ fontSize: '0.85rem', color: '#666', margin: '0', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                            {product.specs.description}
+                        </p>
+                    )}
                 </div>
 
                 <div style={{ marginTop: 'auto' }}>
-                    <div style={{ marginBottom: '1.5rem', display: 'flex', alignItems: 'baseline', gap: '0.5rem' }}>
-                        <div style={{ fontSize: '1.75rem', fontWeight: '900', color: '#1a1a1a' }}>
-                            ₹{(product.safe_tech_price || product.price).toLocaleString()}
-                        </div>
-                        {product.safe_tech_price && (
-                            <span style={{ fontSize: '0.8rem', color: '#25D366', fontWeight: '800', background: '#e6f9ed', padding: '2px 8px', borderRadius: '4px' }}>VERIFIED PRICE</span>
-                        )}
-                    </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
                         <button

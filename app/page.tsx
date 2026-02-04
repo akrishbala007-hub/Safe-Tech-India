@@ -131,17 +131,19 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           <p style={{
             fontSize: 'clamp(1.1rem, 2vw, 1.4rem)',
             color: '#333',
-            marginBottom: '2.5rem',
-            maxWidth: '800px',
-            margin: '0 auto 2.5rem',
+            marginBottom: '1rem',
+            maxWidth: '1000px',
+            margin: '0 auto 1rem',
             lineHeight: '1.6',
             fontWeight: '500',
             animation: 'fadeInUp 0.8s ease-out 0.2s backwards'
           }}>
-            Empowering Authorized Retailers and Refurbished Specialists with the tools to dominate the local market.
+            Equipping Authorized Dealers and Refurbished Specialists to accelerate sales through seamless inventory management and live lead generation.
             <br />
-            <strong style={{ background: '#000', color: '#FECC00', padding: '0.2rem 0.8rem', borderRadius: '4px', display: 'inline-block', marginTop: '0.5rem' }}>Join the network for ₹499/Year.</strong>
+            <strong style={{ background: '#000', color: '#FECC00', padding: '0.2rem 0.8rem', borderRadius: '4px', display: 'inline-block', marginTop: '1rem' }}>Join the network for ₹499/Year.</strong>
           </p>
+
+
 
           {/* CTA Buttons */}
           <div style={{

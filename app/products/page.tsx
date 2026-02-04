@@ -4,6 +4,58 @@ import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
 
+const animations = `
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+@keyframes cycleItems {
+  0%, 25% { opacity: 1; transform: translateY(0); }
+  30%, 100% { opacity: 0; transform: translateY(-10px); }
+}
+.cycle-container {
+  position: relative;
+  height: 1.2rem;
+  width: 100%;
+}
+.cycle-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  font-weight: bold;
+  font-size: 1rem;
+}
+.cycle-item:nth-child(1) { animation: cycleItems 12s infinite; }
+.cycle-item:nth-child(2) { animation: cycleItems 12s infinite 3s; }
+.cycle-item:nth-child(3) { animation: cycleItems 12s infinite 6s; }
+.cycle-item:nth-child(4) { animation: cycleItems 12s infinite 9s; }
+@keyframes cycleImages {
+  0%, 25% { opacity: 1; z-index: 10; }
+  30%, 100% { opacity: 0; z-index: 0; }
+}
+.cycle-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  border-radius: 20px;
+}
+.cycle-image:nth-child(1) { animation: cycleImages 12s infinite; }
+.cycle-image:nth-child(2) { animation: cycleImages 12s infinite 3s; }
+.cycle-image:nth-child(3) { animation: cycleImages 12s infinite 6s; }
+.cycle-image:nth-child(4) { animation: cycleImages 12s infinite 9s; }
+`
+
 export default async function ProductsPage({
     searchParams
 }: {
@@ -74,15 +126,16 @@ export default async function ProductsPage({
 
     return (
         <div style={{ background: '#f8fafc', minHeight: '100vh' }}>
+            <style>{animations}</style>
             <Navbar />
 
             {/* Search Header Section */}
-            <div style={{ background: '#0a0a0a', padding: '6rem 1rem 4rem', color: 'white', textAlign: 'center' }}>
+            <div style={{ background: '#FECC00', padding: '6rem 1rem 4rem', color: '#1a1a1a', textAlign: 'center' }}>
                 <div className="container" style={{ maxWidth: '800px' }}>
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '1.5rem', letterSpacing: '-0.02em' }}>
                         Browse Verified Inventory
                     </h1>
-                    <p style={{ color: '#aaa', marginBottom: '2.5rem', fontSize: '1.1rem' }}>
+                    <p style={{ color: '#333', marginBottom: '2.5rem', fontSize: '1.1rem', fontWeight: '500' }}>
                         Find certified refurbished and brand new tech from verified dealers.
                     </p>
 
@@ -97,10 +150,10 @@ export default async function ProductsPage({
                                 padding: '1.5rem 2rem 1.5rem 3.5rem',
                                 borderRadius: '100px',
                                 border: 'none',
-                                background: '#1c1c1c',
-                                color: 'white',
+                                background: '#fff',
+                                color: '#1a1a1a',
                                 fontSize: '1.1rem',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.5)',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
                                 outline: 'none'
                             }}
                         />
@@ -123,7 +176,7 @@ export default async function ProductsPage({
                     </form>
 
                     {/* Quick Tabs */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem', marginBottom: '4rem' }}>
                         {categories.map((cat) => (
                             <Link
                                 key={cat.value}
@@ -131,8 +184,8 @@ export default async function ProductsPage({
                                 style={{
                                     textDecoration: 'none',
                                     padding: '1.2rem',
-                                    background: selectedCategory === cat.value ? '#FECC00' : '#1c1c1c',
-                                    color: selectedCategory === cat.value ? 'black' : 'white',
+                                    background: selectedCategory === cat.value ? '#000' : '#fff',
+                                    color: selectedCategory === cat.value ? '#FECC00' : '#1a1a1a',
                                     borderRadius: '16px',
                                     fontWeight: '700',
                                     fontSize: '0.9rem',
@@ -141,13 +194,99 @@ export default async function ProductsPage({
                                     justifyContent: 'center',
                                     gap: '10px',
                                     transition: 'all 0.2s ease',
-                                    border: selectedCategory === cat.value ? 'none' : '1px solid #333'
+                                    border: selectedCategory === cat.value ? 'none' : '1px solid rgba(0,0,0,0.1)'
                                 }}
                             >
                                 <span>{cat.icon}</span>
                                 <span>{cat.label}</span>
                             </Link>
                         ))}
+                    </div>
+
+                    {/* Mixed Assets Image with Animation */}
+                    <div style={{
+                        maxWidth: '1000px',
+                        margin: '0 auto',
+                        position: 'relative',
+                        animation: 'fadeInUp 1s ease-out 0.4s backwards'
+                    }}>
+                        <div style={{
+                            background: 'white',
+                            padding: '1.5rem',
+                            borderRadius: '30px',
+                            boxShadow: '0 30px 60px rgba(0,0,0,0.1)',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            border: '8px solid rgba(255,255,255,0.5)'
+                        }}>
+                            <div style={{ width: '100%', height: '500px', borderRadius: '20px', position: 'relative', overflow: 'hidden' }}>
+                                <img
+                                    src="https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                    alt="Refurbished Laptops"
+                                    className="cycle-image"
+                                />
+                                <img
+                                    src="https://images.pexels.com/photos/18105/pexels-photo.jpg?auto=compress&cs=tinysrgb&w=1200"
+                                    alt="New Laptops"
+                                    className="cycle-image"
+                                />
+                                <img
+                                    src="https://images.pexels.com/photos/2106216/pexels-photo-2106216.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                    alt="Accessories"
+                                    className="cycle-image"
+                                />
+                                <img
+                                    src="https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                                    alt="Computer Hardware"
+                                    className="cycle-image"
+                                />
+                            </div>
+
+                            <div style={{
+                                position: 'absolute',
+                                top: '10%',
+                                right: '5%',
+                                background: '#fff',
+                                padding: '1rem',
+                                borderRadius: '16px',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                                animation: 'float 4000ms ease-in-out infinite',
+                                width: '200px',
+                                textAlign: 'left',
+                                zIndex: 20
+                            }}>
+                                <div style={{ fontSize: '0.8rem', color: '#666', marginBottom: '0.5rem' }}>Latest Stock</div>
+                                <div className="cycle-container">
+                                    <div className="cycle-item">Refurbished Laptops</div>
+                                    <div className="cycle-item">New Laptops</div>
+                                    <div className="cycle-item">Accessories</div>
+                                    <div className="cycle-item">Computer Hardware</div>
+                                </div>
+                            </div>
+
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '10%',
+                                left: '5%',
+                                background: '#000',
+                                color: '#FECC00',
+                                padding: '1rem',
+                                borderRadius: '16px',
+                                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
+                                animation: 'float 5000ms ease-in-out infinite reverse',
+                                width: '200px',
+                                textAlign: 'left',
+                                zIndex: 20
+                            }}>
+                                <div style={{ fontSize: '0.8rem', opacity: 0.8, marginBottom: '0.5rem' }}>Live Leads</div>
+                                <div className="cycle-container">
+                                    <div className="cycle-item">15+ Refurbished Leads</div>
+                                    <div className="cycle-item">10+ New Laptop Leads</div>
+                                    <div className="cycle-item">50+ Accessory Leads</div>
+                                    <div className="cycle-item">20+ Hardware Leads</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,7 +317,6 @@ export default async function ProductsPage({
                     )}
                 </div>
             </div>
-            <Footer />
         </div>
     )
 }
