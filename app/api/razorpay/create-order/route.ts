@@ -3,9 +3,17 @@ import Razorpay from 'razorpay'
 
 export async function POST(req: Request) {
     try {
+        const keyId = process.env.RAZORPAY_KEY_ID
+        const keySecret = process.env.RAZORPAY_KEY_SECRET
+
+        if (!keyId || !keySecret) {
+            console.error('SERVER ERROR: Razorpay keys are missing')
+            return NextResponse.json({ error: 'Razorpay keys are not configured on the server.' }, { status: 500 })
+        }
+
         const razorpay = new Razorpay({
-            key_id: process.env.RAZORPAY_KEY_ID!,
-            key_secret: process.env.RAZORPAY_KEY_SECRET!,
+            key_id: keyId,
+            key_secret: keySecret,
         })
 
         const { amount, userId, currency = 'INR' } = await req.json()

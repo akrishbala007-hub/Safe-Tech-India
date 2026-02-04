@@ -438,15 +438,22 @@ export default function Dashboard() {
                                                 const res = await fetch('/api/razorpay/create-order', {
                                                     method: 'POST',
                                                     headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ amount: 1, userId: profile.id })
+                                                    body: JSON.stringify({ amount: 499, userId: profile.id })
                                                 })
                                                 const order = await res.json()
 
                                                 if (order.error) throw new Error(order.error)
 
                                                 // 2. Open Razorpay Checkout
+                                                const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+                                                if (!razorpayKey) {
+                                                    alert('Error: Razorpay Key ID is not configured in environment variables.')
+                                                    setLoading(false)
+                                                    return
+                                                }
+
                                                 const options = {
-                                                    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+                                                    key: razorpayKey,
                                                     amount: order.amount,
                                                     currency: order.currency,
                                                     name: 'Safe Tech India',
@@ -506,7 +513,7 @@ export default function Dashboard() {
                                             cursor: 'pointer'
                                         }}
                                     >
-                                        ✅ Verify & Pay ₹1 / Test
+                                        ✅ Verify & Pay (₹499)
                                     </button>
                                 )}
                             </div>
