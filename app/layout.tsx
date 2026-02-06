@@ -5,6 +5,10 @@ import WhatsAppFloat from '@/components/WhatsAppFloat'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://safetechindia.org.in'),
+  alternates: {
+    canonical: '/',
+  },
   title: 'Safe Tech India | Best Computer Hub in Tamil Nadu & Coimbatore',
   description: "India's trusted digital ecosystem for computer dealers, distributors, and customers in Tamil Nadu. Buy refurbished laptops, desktops, and computer hardware in Coimbatore, Chennai, and Madurai.",
   keywords: [
