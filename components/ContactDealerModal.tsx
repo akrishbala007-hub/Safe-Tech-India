@@ -45,14 +45,41 @@ export default function ContactDealerModal({ product, onClose }: ContactDealerMo
     }
 
     if (submitted) {
+        const waLink = `https://wa.me/${product.profiles?.whatsapp_number}?text=${encodeURIComponent(`Hi ${product.profiles?.shop_name}, I just inquired about ${product.title} on Verified IT. My name is ${form.name}.`)}`
+
         return (
             <div style={overlayStyle}>
                 <div style={modalStyle}>
                     <div style={{ textAlign: 'center', padding: '2rem' }}>
-                        <CheckCircle size={60} color="#25D366" style={{ marginBottom: '1.5rem' }} />
-                        <h2 style={{ marginBottom: '1rem' }}>Inquiry Sent!</h2>
-                        <p style={{ color: '#666', marginBottom: '2rem' }}>Our team or the dealer will contact you shortly regarding <strong>{product.title}</strong>.</p>
-                        <button onClick={onClose} className="btn btn-primary" style={{ width: '100%' }}>Close</button>
+                        <CheckCircle size={60} color="#25D366" style={{ marginBottom: '1.5rem', display: 'block', margin: '0 auto 1.5rem' }} />
+                        <h2 style={{ marginBottom: '1rem' }}>Inquiry Saved!</h2>
+                        <p style={{ color: '#666', marginBottom: '2rem' }}>
+                            The dealer has been notified via the dashboard.
+                            <br /><br />
+                            <strong>For faster response, chat on WhatsApp now:</strong>
+                        </p>
+
+                        <a
+                            href={waLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn"
+                            style={{
+                                background: '#25D366',
+                                color: 'white',
+                                width: '100%',
+                                display: 'block',
+                                padding: '1rem',
+                                borderRadius: '8px',
+                                textDecoration: 'none',
+                                fontWeight: 'bold',
+                                marginBottom: '1rem'
+                            }}
+                        >
+                            Open WhatsApp Chat 💬
+                        </a>
+
+                        <button onClick={onClose} className="btn" style={{ width: '100%', background: '#eee', color: '#333' }}>Close</button>
                     </div>
                 </div>
             </div>

@@ -74,6 +74,12 @@ export default function RequirementModal() {
             alert(error.message)
             setLoading(false)
         } else {
+            // Notify Admin via WhatsApp
+            const msg = `New Buying Requirement: ${formData.title} (${formData.quantity} qty) in ${formData.city}. Budget: ${formData.budget}`;
+            import('@/lib/whatsapp').then(mod => {
+                mod.sendWhatsAppNotification('', msg, 'admin');
+            });
+
             alert('Requirement Posted! Dealers will be notified.')
             setIsOpen(false)
             // Reset core fields but keep contact info for convenience

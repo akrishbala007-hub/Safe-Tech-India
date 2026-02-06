@@ -21,7 +21,7 @@ export default function KnowledgeHub() {
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                     {/* Article 1 - Strategy */}
                     <ArticleCard
-                        image="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=600&q=80"
+                        image="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80"
                         category="Strategy"
                         title="How to price your refurbished laptops for maximum profit."
                         onRead={handleReadClick}
@@ -29,7 +29,7 @@ export default function KnowledgeHub() {
 
                     {/* Article 2 - Market Trends */}
                     <ArticleCard
-                        image="https://images.unsplash.com/photo-1531297424005-2989c1aa2c48?auto=format&fit=crop&w=600&q=80"
+                        image="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80"
                         category="Market Trends"
                         title="The 2026 Laptop Market: Why 'Open-Box' is the new 'New'."
                         onRead={handleReadClick}
@@ -37,7 +37,7 @@ export default function KnowledgeHub() {
 
                     {/* Article 3 - Marketing */}
                     <ArticleCard
-                        image="https://images.unsplash.com/photo-1611162617474-5b21e879e113?auto=format&fit=crop&w=600&q=80"
+                        image="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80"
                         category="Marketing"
                         title="5 WhatsApp Marketing secrets every computer dealer should know."
                         onRead={handleReadClick}

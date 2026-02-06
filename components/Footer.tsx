@@ -19,8 +19,12 @@ export default function Footer() {
                     {/* Brand */}
                     <div>
                         <h2 style={{ color: 'white', marginBottom: '0.5rem' }}>Safe Tech India</h2>
-                        <p style={{ color: 'rgba(255,255,255,0.6)' }}>
-                            SafeTech India: The Digital Infrastructure for the Computer Industry.
+                        <div style={{ color: '#FECC00', fontSize: '0.9rem', fontWeight: 'bold', marginBottom: '1rem', border: '1px solid #FECC00', display: 'inline-block', padding: '2px 8px', borderRadius: '4px' }}>
+                            ISO 9001:2015 Certified
+                        </div>
+
+                        <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
+                            Developed by <strong>Grace Finnovation</strong>, Safe Tech India is designed as a trusted platform for IT hardware dealers, offering streamlined processes, compliance support, and digital growth opportunities.
                         </p>
                     </div>
 

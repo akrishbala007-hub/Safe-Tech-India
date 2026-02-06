@@ -4,6 +4,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import imageCompression from 'browser-image-compression'
 
 export default function AddProduct() {
     const router = useRouter()
@@ -28,11 +29,6 @@ export default function AddProduct() {
 
             const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single()
 
-            if (!prof?.is_verified) {
-                alert('Access Denied: You must be verified to add products.')
-                router.push('/dashboard')
-                return
-            }
             setProfile(prof)
         }
         checkAccess()
@@ -46,13 +42,22 @@ export default function AddProduct() {
             }
 
             const file = e.target.files[0]
+
+            // 1. Compress Image
+            const options = {
+                maxSizeMB: 0.5, // Max 500KB
+                maxWidthOrHeight: 1200, // Max width 1200px
+                useWebWorker: true,
+            }
+            const compressedFile = await imageCompression(file, options)
+
             const fileExt = file.name.split('.').pop()
             const fileName = `${Math.random()}.${fileExt}`
             const filePath = `${fileName}`
 
             const { error: uploadError } = await supabase.storage
                 .from('products')
-                .upload(filePath, file)
+                .upload(filePath, compressedFile) // Upload compressed file
 
             if (uploadError) {
                 throw uploadError
@@ -62,6 +67,7 @@ export default function AddProduct() {
             setForm({ ...form, image_url: data.publicUrl })
 
         } catch (error: any) {
+            console.error(error)
             alert('Error uploading image: ' + error.message)
         } finally {
             setUploading(false)
@@ -72,11 +78,17 @@ export default function AddProduct() {
         e.preventDefault()
         setLoading(true)
 
+        // Determine condition based on category
+        let finalCondition = form.condition
+        if (!form.category.includes('Refurbished')) {
+            finalCondition = 'New'
+        }
+
         const { error } = await supabase.from('products').insert({
             dealer_id: profile.id,
             title: form.title,
             category: form.category,
-            condition: form.condition,
+            condition: finalCondition,
             price: parseFloat(form.price),
             image_url: form.image_url,
             specs: { description: form.description } // Store in specs for compatibility
@@ -119,10 +131,11 @@ export default function AddProduct() {
                                 value={form.category}
                                 onChange={e => setForm({ ...form, category: e.target.value })}
                             >
-                                <option>Refurbished Laptops / Desktop</option>
-                                <option>New Laptop</option>
+                                <option>Refurbished laptops / Desktop</option>
+                                <option>Brand New laptops / Desktop</option>
+                                <option>Computer accessories</option>
                                 <option>Computer Hardware</option>
-                                <option>Accessories</option>
+                                <option>Other Hardware</option>
                             </select>
                         </div>
                         {form.category.includes('Refurbished') && (
@@ -166,6 +179,11 @@ export default function AddProduct() {
                         </div>
                     </div>
                     {form.image_url && <img src={form.image_url} alt="Preview" style={{ width: '100px', borderRadius: '8px', objectFit: 'cover' }} />}
+
+                    <div style={{ marginTop: '1rem', padding: '1rem', background: '#fee2e2', color: '#991b1b', borderRadius: '8px', border: '2px solid #ef4444', fontWeight: 'bold', fontSize: '1.1rem', textAlign: 'center' }}>
+                        ⚠️ ATTENTION: Upload ONLY ORIGINAL PHOTOS taken by you. <br />
+                        Do NOT upload downloaded, edited, or watermarked images.
+                    </div>
 
                     <div style={{ padding: '1rem', background: 'hsl(var(--input-bg))', borderRadius: '8px' }}>
                         <h3 style={{ marginBottom: '1rem' }}>Description</h3>

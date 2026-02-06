@@ -91,6 +91,12 @@ export default function Register() {
         }
 
         if (data.user) {
+            // Notify Admin via WhatsApp
+            const roleMsg = role === 'dealer' ? `New Dealer Registration: ${formData.shopName} (${formData.city})` : `New User Registration: ${formData.name}`;
+            import('@/lib/whatsapp').then(mod => {
+                mod.sendWhatsAppNotification('', roleMsg, 'admin'); // Empty phone for admin type
+            });
+
             alert('Registration successful! Redirecting to dashboard...')
             // Profile is created by DB trigger handle_new_user()
             // We use window.location.href for a hard reload to ensure session is picked up

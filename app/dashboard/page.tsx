@@ -151,7 +151,7 @@ export default function Dashboard() {
                             background: profile.is_verified ? 'hsla(var(--success), 0.1)' : 'hsla(var(--warning), 0.1)',
                             color: profile.is_verified ? 'hsl(var(--success))' : 'hsl(var(--warning))'
                         }}>
-                            {profile.is_verified ? '✓ Verified Partner' : '⚠ Verification Pending'}
+                            {profile.is_verified ? '✓ Verified Partner' : 'Account Active'}
                         </div>
                         <span style={{
                             fontSize: '0.8rem',
@@ -399,7 +399,14 @@ export default function Dashboard() {
                                         <span style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{req.title}</span>
                                         <span style={{ fontSize: '0.8rem', background: '#333', padding: '0.2rem 0.5rem', borderRadius: '4px' }}>Qty: {req.quantity}</span>
                                     </div>
-                                    <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem' }}>{req.description}</p>
+                                    <p style={{ fontSize: '0.9rem', marginBottom: '0.5rem', whiteSpace: 'pre-wrap' }}>
+                                        {req.description
+                                            .replace(/CUSTOMER:.*?\n/gi, '')
+                                            .replace(/PHONE:.*?\n/gi, '')
+                                            .replace(/DEALER:.*?(?:\n|$)/gi, '')
+                                            .replace(/PRODUCT_ID:.*?(?:\n|$)/gi, '')
+                                            .trim()}
+                                    </p>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', color: 'var(--text-muted)' }}>
                                         <span>Budget: ₹{req.budget}</span>
                                         <span>{new Date(req.created_at).toLocaleDateString()}</span>
@@ -416,108 +423,14 @@ export default function Dashboard() {
                             <h3>Inventory ({products.length})</h3>
                         </div>
 
-                        {profile.is_verified ? (
-                            <button
-                                className="btn btn-primary"
-                                style={{ width: '100%', marginBottom: '1rem' }}
-                                onClick={() => router.push('/dashboard/add-product')}
-                            >
-                                Add New Product
-                            </button>
-                        ) : (
-                            <div style={{ padding: '1rem', background: 'hsla(var(--warning), 0.1)', borderRadius: '8px', color: 'hsl(var(--warning))', marginBottom: '1rem' }}>
-                                <div style={{ marginBottom: '0.5rem' }}>
-                                    <span style={{ fontWeight: 'bold' }}>Action Blocked:</span> Waiting for Admin Verification to upload products.
-                                </div>
-                                {profile.role === 'dealer' && (
-                                    <button
-                                        onClick={async () => {
-                                            try {
-                                                setLoading(true)
-                                                // 1. Create Order
-                                                const res = await fetch('/api/razorpay/create-order', {
-                                                    method: 'POST',
-                                                    headers: { 'Content-Type': 'application/json' },
-                                                    body: JSON.stringify({ amount: 499, userId: profile.id })
-                                                })
-                                                const order = await res.json()
-
-                                                if (order.error) throw new Error(order.error)
-
-                                                // 2. Open Razorpay Checkout
-                                                const razorpayKey = process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
-                                                if (!razorpayKey) {
-                                                    alert('Error: Razorpay Key ID is not configured in environment variables.')
-                                                    setLoading(false)
-                                                    return
-                                                }
-
-                                                const options = {
-                                                    key: razorpayKey,
-                                                    amount: order.amount,
-                                                    currency: order.currency,
-                                                    name: 'Safe Tech India',
-                                                    description: 'Dealer Verification Fee',
-                                                    order_id: order.id,
-                                                    handler: async function (response: any) {
-                                                        // 3. Verify Payment
-                                                        const verifyRes = await fetch('/api/razorpay/verify-payment', {
-                                                            method: 'POST',
-                                                            headers: { 'Content-Type': 'application/json' },
-                                                            body: JSON.stringify({
-                                                                razorpay_order_id: response.razorpay_order_id,
-                                                                razorpay_payment_id: response.razorpay_payment_id,
-                                                                razorpay_signature: response.razorpay_signature,
-                                                                user_id: profile.id
-                                                            })
-                                                        })
-                                                        const verifyData = await verifyRes.json()
-
-                                                        if (verifyData.success) {
-                                                            alert('Payment Successful! Your account is now verified.')
-                                                            window.location.reload()
-                                                        } else {
-                                                            alert('Payment verification failed: ' + verifyData.error)
-                                                        }
-                                                    },
-                                                    prefill: {
-                                                        name: profile.shop_name || profile.name,
-                                                        email: profile.email, // Note: We might need to handle email from auth if not in profile
-                                                        contact: profile.phone
-                                                    },
-                                                    theme: { color: '#FDB813' }
-                                                };
-
-                                                const rzp = new (window as any).Razorpay(options)
-                                                rzp.open()
-                                            } catch (err: any) {
-                                                alert('Payment initialization failed: ' + err.message)
-                                            } finally {
-                                                setLoading(false)
-                                            }
-                                        }}
-                                        className="btn"
-                                        style={{
-                                            background: 'hsl(var(--primary))',
-                                            color: '#1a1a1a',
-                                            padding: '1rem',
-                                            fontSize: '1rem',
-                                            width: '100%',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '0.5rem',
-                                            fontWeight: 'bold',
-                                            borderRadius: '8px',
-                                            border: 'none',
-                                            cursor: 'pointer'
-                                        }}
-                                    >
-                                        ✅ Verify & Pay (₹499)
-                                    </button>
-                                )}
-                            </div>
-                        )}
+                        {/* UNLOCKED: All dealers can upload products now */}
+                        <button
+                            className="btn btn-primary"
+                            style={{ width: '100%', marginBottom: '1rem' }}
+                            onClick={() => router.push('/dashboard/add-product')}
+                        >
+                            Add New Product
+                        </button>
 
                         <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
                             {products.map(p => (

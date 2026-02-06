@@ -31,25 +31,61 @@ export async function generateMetadata(
         title: `${product.title} - ${product.condition} | Safe Tech India`,
         description: `Buy verified ${product.title} (${product.condition}) from ${product.profiles?.shop_name} in ${product.profiles?.city}. ${product.specs?.processor || ''} ${product.specs?.ram || ''}. Safe Tech Verified.`,
         openGraph: {
-            title: `${product.title} | Safe Tech India`,
-            description: `Buy verified ${product.title} from ${product.profiles?.shop_name}. Safe Tech Verified Device.`,
-            images: [product.image_url || '/logo.png', ...previousImages], // Prefer product image
+            title,
+            description,
+            images: [product.image_url],
+            type: 'website',
         },
     }
 }
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-    const { id } = await params
+export default async function ProductPage({ params }: { params: { id: string } }) {
     const supabase = await createClient()
-
-    const { data: product } = await supabase
+    const { data: product, error } = await supabase
         .from('products')
-        .select('*, profiles(*)')
-        .eq('id', id)
+        .select(`
+            *,
+            profiles (
+                name,
+                shop_name,
+                phone,
+                whatsapp_number,
+                city,
+                is_verified,
+                trust_score,
+                member_since
+            )
+        `)
+        .eq('id', params.id)
         .single()
 
-    if (!product) {
-        return <div>Product not found</div>
+    if (error || !product) {
+        return <div className="container" style={{ padding: '4rem' }}>Product not found</div>
+    }
+
+    // SEO: Schema.org JSON-LD
+    const jsonLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.title,
+        image: product.image_url,
+        description: product.specs?.description || product.title,
+        brand: {
+            '@type': 'Brand',
+            name: product.specs?.brand || 'Generic'
+        },
+        offers: {
+            '@type': 'Offer',
+            url: `https://safetechindia.org.in/product/${product.id}`,
+            priceCurrency: 'INR',
+            price: product.price,
+            itemCondition: product.condition === 'New' ? 'https://schema.org/NewCondition' : 'https://schema.org/UsedCondition',
+            availability: 'https://schema.org/InStock',
+            seller: {
+                '@type': 'Organization',
+                name: product.profiles?.shop_name || 'Verified Dealer'
+            }
+        }
     }
 
     // --- DUMMY DATA FALLBACK FOR DEMO (If DB is empty) ---

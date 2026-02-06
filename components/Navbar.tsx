@@ -50,8 +50,9 @@ export default function Navbar() {
                 gap: '1rem'
             }}>
                 {/* Logo */}
-                <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-                    <img src="/logo.png" alt="Safe Tech India" style={{ height: '60px' }} /> {/* Reduced height */}
+                <Link href="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', height: '60px' }}>
+                    {/* SVG logo needs explicitly w/h or contain fit to avoid stretching */}
+                    <img src="/logo.png" alt="Safe Tech India" style={{ height: '100%', maxWidth: '200px', objectFit: 'contain' }} />
                 </Link>
 
                 {/* Navigation Links */}

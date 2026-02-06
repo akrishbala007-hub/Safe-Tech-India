@@ -31,11 +31,8 @@ export default function EditProduct() {
 
             const { data: prof } = await supabase.from('profiles').select('*').eq('id', user.id).single()
 
-            if (!prof?.is_verified) {
-                alert('Access Denied: You must be verified.')
-                router.push('/dashboard')
-                return
-            }
+            // Verification check removed to allow all dealers to edit
+            // if (!prof?.is_verified) { ... }
             setProfile(prof)
 
             // Fetch product
@@ -104,12 +101,18 @@ export default function EditProduct() {
         e.preventDefault()
         setLoading(true)
 
+        // Determine condition based on category
+        let finalCondition = form.condition
+        if (!form.category.includes('Refurbished')) {
+            finalCondition = 'New'
+        }
+
         const { error } = await supabase
             .from('products')
             .update({
                 title: form.title,
                 category: form.category,
-                condition: form.condition,
+                condition: finalCondition,
                 price: parseFloat(form.price),
                 image_url: form.image_url,
                 specs: { description: form.description }
@@ -176,10 +179,11 @@ export default function EditProduct() {
                                 value={form.category}
                                 onChange={e => setForm({ ...form, category: e.target.value })}
                             >
-                                <option>Refurbished Laptops / Desktop</option>
-                                <option>New Laptop</option>
+                                <option>Refurbished laptops / Desktop</option>
+                                <option>Brand New laptops / Desktop</option>
+                                <option>Computer accessories</option>
                                 <option>Computer Hardware</option>
-                                <option>Accessories</option>
+                                <option>Other Hardware</option>
                             </select>
                         </div>
                         {form.category.includes('Refurbished') && (
