@@ -27,14 +27,13 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
   // ... (Keep existing Dummy Logic if empty for demo purposes? Or remove? I'll keep basics)
 
-  // Dummy Verified Dealers for the marquee/list
-  const featuredDealers = [
-    { name: 'TechZone India', city: 'Bangalore' },
-    { name: 'Lamington Wholesalers', city: 'Mumbai' },
-    { name: 'Chennai IT Hub', city: 'Chennai' },
-    { name: 'Nehru Place Traders', city: 'Delhi' },
-    { name: 'Pune Laptops', city: 'Pune' },
-    { name: 'Silicon Valley Hyd', city: 'Hyderabad' }
+  // Featured Dealers for the Grid
+  const topDealers = [
+    { name: 'TechNova Computers', city: 'Coimbatore', region: 'Tamil Nadu', image: 'https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80' },
+    { name: 'Digital Edge Systems', city: 'Chennai', region: 'Tamil Nadu', image: 'https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=600&q=80' },
+    { name: 'SmartByte IT Hub', city: 'Bengaluru', region: 'Karnataka', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80' },
+    { name: 'FutureLink Hardware', city: 'Hyderabad', region: 'Telangana', image: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=600&q=80' },
+    { name: 'CrystalTech Solutions', city: 'Pune', region: 'Maharashtra', image: 'https://images.unsplash.com/photo-1563986768609-322da13575f3?auto=format&fit=crop&w=600&q=80' }
   ]
 
   return (
@@ -55,6 +54,19 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         .hero-card:hover {
           transform: translateY(-10px) scale(1.02);
           box-shadow: 0 20px 40px rgba(0,0,0,0.2) !important;
+        }
+        .dealer-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+        .dealer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+            border-color: #FECC00;
+        }
+        .dealer-card:hover img {
+            transform: scale(1.1);
         }
       `}</style>
       <section style={{
@@ -118,7 +130,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
 
           {/* CTA Buttons */}
           <div style={{
-            display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '4rem',
+            display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '5rem',
             animation: 'fadeInUp 0.8s ease-out 0.4s backwards'
           }}>
             <Link href="/register" style={{
@@ -150,58 +162,58 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             </Link>
           </div>
 
-          {/* AGGREGATED PRODUCTS DISPLAY - HIDDEN AS PER USER REQUEST */}
-          {/* 
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-            gap: '2rem',
-            marginBottom: '4rem',
-            animation: 'fadeInUp 1s ease-out 0.6s backwards'
-          }}>
-            {displayProducts.map((group: any, idx: number) => (
-              <div key={idx} className="hero-card" style={{
-                background: 'white',
-                borderRadius: '20px',
-                padding: '1rem',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.1)',
-                transition: 'all 0.3s ease',
-                cursor: 'pointer',
-                textAlign: 'left'
-              }}>
-                <div style={{ height: '200px', overflow: 'hidden', borderRadius: '15px', marginBottom: '1rem', position: 'relative' }}>
-                  <img src={group.image_url || 'https://via.placeholder.com/300'}
-                    alt={group.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                  <div style={{ position: 'absolute', bottom: '10px', right: '10px', background: 'rgba(0,0,0,0.8)', color: 'white', padding: '4px 10px', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold' }}>
-                    {group.stock_count} units available
-                  </div>
-                </div>
-                <h3 style={{ fontSize: '1.1rem', fontWeight: '700', margin: '0 0 0.5rem', lineHeight: '1.4' }}>{group.title}</h3>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '1.2rem', fontWeight: 'bold', color: '#1a1a1a' }}>₹{group.min_price.toLocaleString()}</span>
-                  <span style={{ fontSize: '0.8rem', color: '#666', background: '#f0f0f0', padding: '2px 8px', borderRadius: '4px' }}>
-                    {group.dealer_count} Dealers
-                  </span>
-                </div>
-                <Link href={`/product/${group.product_ids[0]}`} style={{
-                  display: 'block', marginTop: '1rem', textAlign: 'center', background: '#000', color: '#FECC00', padding: '0.5rem', borderRadius: '8px', textDecoration: 'none', fontWeight: 'bold'
-                }}>
-                  Check Availability
-                </Link>
-              </div>
-            ))}
-          </div> 
-*/}
+          {/* Trusted Dealers Grid */}
+          <div style={{ animation: 'fadeInUp 0.8s ease-out 0.5s backwards' }}>
+            <p style={{
+              fontSize: '0.9rem',
+              color: '#555',
+              marginBottom: '2.5rem',
+              textTransform: 'uppercase',
+              letterSpacing: '3px',
+              fontWeight: '900',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '15px'
+            }}>
+              <span style={{ height: '1px', width: '40px', background: 'rgba(0,0,0,0.2)' }}></span>
+              Trusted By Top Dealers
+              <span style={{ height: '1px', width: '40px', background: 'rgba(0,0,0,0.2)' }}></span>
+            </p>
 
-          {/* Verified Dealers Marquee/Strip */}
-          <div style={{ borderTop: '1px solid rgba(0,0,0,0.1)', paddingTop: '2rem' }}>
-            <p style={{ fontSize: '0.9rem', color: '#555', marginBottom: '1rem', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '600' }}>Trusted By Top Dealers In</p>
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap', opacity: 0.9 }}>
-              {featuredDealers.map((d, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <span style={{ color: '#000', fontWeight: 'bold' }}>✓</span>
-                  <span style={{ fontWeight: '600', color: '#222' }}>{d.name}</span>
-                  <span style={{ fontSize: '0.8rem', background: '#fff', color: '#000', padding: '2px 8px', borderRadius: '4px', border: '1px solid #ddd' }}>{d.city}</span>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+              gap: '1.5rem',
+              maxWidth: '1100px',
+              margin: '0 auto'
+            }}>
+              {topDealers.map((dealer, idx) => (
+                <div key={idx} className="dealer-card" style={{
+                  background: 'white',
+                  borderRadius: '16px',
+                  padding: '1rem',
+                  textAlign: 'left'
+                }}>
+                  <div style={{
+                    height: '140px',
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    marginBottom: '1rem',
+                    background: '#f0f0f0'
+                  }}>
+                    <img
+                      src={dealer.image}
+                      alt={dealer.name}
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
+                    />
+                  </div>
+                  <h4 style={{ fontSize: '1rem', fontWeight: '800', marginBottom: '0.3rem', color: '#1a1a1a' }}>{dealer.name}</h4>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    <span style={{ fontSize: '0.75rem', color: '#666', fontWeight: 'bold' }}>📍 {dealer.city}</span>
+                    <span style={{ color: '#FECC00', fontSize: '1rem' }}>★</span>
+                  </div>
+                  <p style={{ fontSize: '0.65rem', color: '#888', marginTop: '0.2rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>{dealer.region}</p>
                 </div>
               ))}
             </div>
