@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
         rules: {
             userAgent: '*',
             allow: '/',
-            disallow: ['/admin/', '/dashboard/', '/api/'], // Protect dynamic/private routes
+            disallow: ['/admin/', '/dashboard/'],
         },
         sitemap: 'https://safetechindia.org.in/sitemap.xml',
     }

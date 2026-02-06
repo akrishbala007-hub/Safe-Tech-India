@@ -30,6 +30,29 @@ export async function generateMetadata(
     const title = `${product.title} - ${product.condition} | Safe Tech India`
     const description = `Buy verified ${product.title} (${product.condition}) from ${product.profiles?.shop_name} in ${product.profiles?.city}. ${product.specs?.processor || ''} ${product.specs?.ram || ''}. Safe Tech Verified.`
 
+    const productLd = {
+        '@context': 'https://schema.org',
+        '@type': 'Product',
+        name: product.title,
+        image: product.image_url,
+        description: description,
+        brand: {
+            '@type': 'Brand',
+            name: product.brand || 'Safe Tech Verified',
+        },
+        offers: {
+            '@type': 'Offer',
+            url: `https://safetechindia.org.in/product/${id}`,
+            priceCurrency: 'INR',
+            price: product.price,
+            availability: 'https://schema.org/InStock',
+            seller: {
+                '@type': 'Organization',
+                name: product.profiles?.shop_name,
+            },
+        },
+    }
+
     return {
         title,
         description,
@@ -38,6 +61,9 @@ export async function generateMetadata(
             description,
             images: [product.image_url],
             type: 'website',
+        },
+        other: {
+            'script:ld+json': JSON.stringify(productLd),
         },
     }
 }

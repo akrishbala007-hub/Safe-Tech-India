@@ -22,6 +22,7 @@ export default function KnowledgeHub() {
                     {/* Article 1 - Strategy */}
                     <ArticleCard
                         image="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80"
+                        alt="Professional laptop workspace for pricing refurbished computers"
                         category="Strategy"
                         title="How to price your refurbished laptops for maximum profit."
                         onRead={handleReadClick}
@@ -30,6 +31,7 @@ export default function KnowledgeHub() {
                     {/* Article 2 - Market Trends */}
                     <ArticleCard
                         image="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?auto=format&fit=crop&w=600&q=80"
+                        alt="Modern laptop representing latest market trends in computers"
                         category="Market Trends"
                         title="The 2026 Laptop Market: Why 'Open-Box' is the new 'New'."
                         onRead={handleReadClick}
@@ -38,6 +40,7 @@ export default function KnowledgeHub() {
                     {/* Article 3 - Marketing */}
                     <ArticleCard
                         image="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?auto=format&fit=crop&w=600&q=80"
+                        alt="Smartphone with WhatsApp icon for digital marketing tips"
                         category="Marketing"
                         title="5 WhatsApp Marketing secrets every computer dealer should know."
                         onRead={handleReadClick}
@@ -98,11 +101,11 @@ export default function KnowledgeHub() {
     )
 }
 
-function ArticleCard({ image, category, title, onRead }: any) {
+function ArticleCard({ image, alt, category, title, onRead }: any) {
     return (
         <div style={{ background: 'white', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 5px 15px rgba(0,0,0,0.05)', transition: 'transform 0.2s', cursor: 'pointer' }} onClick={onRead}>
             <div style={{ height: '200px', overflow: 'hidden' }}>
-                <img src={image} alt={category} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} className="article-img" />
+                <img src={image} alt={alt || category} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }} className="article-img" />
             </div>
             <div style={{ padding: '1.5rem' }}>
                 <span style={{ fontSize: '0.8rem', color: '#888', textTransform: 'uppercase', fontWeight: 'bold' }}>{category}</span>

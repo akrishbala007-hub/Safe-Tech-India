@@ -1,43 +1,38 @@
 import { MetadataRoute } from 'next'
-import { createClient } from '@/lib/supabase/server'
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const supabase = await createClient()
-
-    // Base URL
+export default function sitemap(): MetadataRoute.Sitemap {
     const baseUrl = 'https://safetechindia.org.in'
 
-    // Static Pages
-    const routes = [
-        '',
-        '/about',
-        '/products',
-        '/login',
-        '/register',
-        '/service-engineer',
-        '/support',
-        '/contact',
-        '/terms-and-conditions',
-        '/refund-policy'
-    ].map((route) => ({
-        url: `${baseUrl}${route}`,
-        lastModified: new Date(),
-        changeFrequency: 'daily' as const,
-        priority: route === '' ? 1 : 0.8,
-    }))
-
-    // Dynamic Products
-    const { data: products } = await supabase
-        .from('products')
-        .select('id, updated_at')
-        .eq('is_active', true)
-
-    const productRoutes = (products || []).map((product) => ({
-        url: `${baseUrl}/product/${product.id}`,
-        lastModified: new Date(product.updated_at || new Date()),
-        changeFrequency: 'weekly' as const,
-        priority: 0.9, // High priority as these are the core content
-    }))
-
-    return [...routes, ...productRoutes]
+    return [
+        {
+            url: baseUrl,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 1,
+        },
+        {
+            url: `${baseUrl}/products`,
+            lastModified: new Date(),
+            changeFrequency: 'daily',
+            priority: 0.9,
+        },
+        {
+            url: `${baseUrl}/register`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.8,
+        },
+        {
+            url: `${baseUrl}/about`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+        {
+            url: `${baseUrl}/contact`,
+            lastModified: new Date(),
+            changeFrequency: 'monthly',
+            priority: 0.5,
+        },
+    ]
 }
