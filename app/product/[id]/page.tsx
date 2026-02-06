@@ -27,9 +27,12 @@ export async function generateMetadata(
 
     const previousImages = (await parent).openGraph?.images || []
 
+    const title = `${product.title} - ${product.condition} | Safe Tech India`
+    const description = `Buy verified ${product.title} (${product.condition}) from ${product.profiles?.shop_name} in ${product.profiles?.city}. ${product.specs?.processor || ''} ${product.specs?.ram || ''}. Safe Tech Verified.`
+
     return {
-        title: `${product.title} - ${product.condition} | Safe Tech India`,
-        description: `Buy verified ${product.title} (${product.condition}) from ${product.profiles?.shop_name} in ${product.profiles?.city}. ${product.specs?.processor || ''} ${product.specs?.ram || ''}. Safe Tech Verified.`,
+        title,
+        description,
         openGraph: {
             title,
             description,
