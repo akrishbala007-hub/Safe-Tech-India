@@ -68,22 +68,34 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         .dealer-card:hover img {
             transform: scale(1.1);
         }
+        
+        /* Desktop Default (Inline styles will be used as base, but these override if needed) */
+        
         @media (max-width: 768px) {
-          .hero-container {
-            padding-top: 5rem !important;
-            padding-bottom: 4rem !important;
-            min-height: auto !important;
+          #hero-section {
+             padding-top: 5rem !important;
+             padding-bottom: 4rem !important;
+             min-height: auto !important;
+             height: auto !important; 
+          }
+          #hero-container {
+            padding-top: 5rem !important; 
+            padding-bottom: 2rem !important;
           }
           .hero-headline {
-            font-size: 2.5rem !important;
-            line-height: 1.1 !important;
+            font-size: 2rem !important;
+            line-height: 1.2 !important;
           }
            .hero-subheadline {
             font-size: 1rem !important;
+            margin-bottom: 1.5rem !important;
+          }
+          .hero-cta-container {
+            margin-bottom: 3rem !important;
           }
         }
       `}</style>
-      <section style={{
+      <section id="hero-section" style={{
         background: '#FECC00', // Brand Yellow
         color: '#1a1a1a',
         padding: '0 0 6rem',
@@ -102,7 +114,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           backgroundSize: '40px 40px'
         }}></div>
 
-        <div className="container hero-container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', paddingTop: '8rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+        <div id="hero-container" className="container hero-container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', paddingTop: '8rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
 
           {/* Main Headline */}
           <h1 className="hero-headline" style={{
@@ -143,7 +155,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           </div>
 
           {/* CTA Buttons */}
-          <div style={{
+          <div className="hero-cta-container" style={{
             display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '5rem',
             animation: 'fadeInUp 0.8s ease-out 0.4s backwards'
           }}>
