@@ -533,7 +533,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           <h2 style={{ textAlign: 'center', marginBottom: '4rem', fontSize: '2.5rem', color: '#1a1a1a' }}>3 Simple Steps to Join</h2>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
             <StepCard num="1" title="Claim Your URL" desc="Register your business and select your custom shop link." />
-            <StepCard num="2" title="Activate Account" desc="Get instant access to unlimited inventory uploads. No Fees." />
+            <StepCard num="2" title="Activate Account" desc="Pay ₹999/Year to get verified status and unlock unlimited inventory uploads." />
             <StepCard num="3" title="Go Live" desc="Upload photos from your phone and start receiving direct WhatsApp inquiries." />
           </div>
           <div style={{ textAlign: 'center', marginTop: '3rem' }}>
@@ -556,6 +556,55 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
       {/* 5.5 KNOWLEDGE HUB (SEO) */}
       <KnowledgeHub />
 
+
+      {/* 5.8 LEADERSHIP SECTION (Moved from About Us) */}
+      <section style={{ padding: '6rem 1rem', background: '#fcfcfc', borderTop: '1px solid #eee' }}>
+        <div className="container">
+          <h2 style={{ textAlign: 'center', fontSize: '3rem', marginBottom: '4rem', color: '#1a1a1a', fontWeight: '800' }}>Leadership</h2>
+          <div style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '4rem',
+            alignItems: 'center',
+            justifyContent: 'center',
+            maxWidth: '1000px',
+            margin: '0 auto'
+          }}>
+            {/* Image */}
+            <div style={{ flex: '0 0 300px', textAlign: 'center' }}>
+              <div style={{
+                width: '280px',
+                height: '280px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '8px solid #FECC00',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.1)',
+                margin: '0 auto'
+              }}>
+                <img
+                  src="/images/md-profile.jpeg"
+                  alt="MD Lawrence"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                />
+              </div>
+            </div>
+
+            {/* Text */}
+            <div style={{ flex: '1 1 400px' }}>
+              <h3 style={{ fontSize: '1.2rem', color: '#FECC00', textTransform: 'uppercase', letterSpacing: '2px', fontWeight: '800', marginBottom: '0.5rem' }}>Meet Our Managing Director</h3>
+              <h2 style={{ fontSize: '2.5rem', color: '#1a1a1a', marginBottom: '1.5rem', lineHeight: '1.2' }}>MD Lawrence <br /><span style={{ fontSize: '1.2rem', fontWeight: 'normal', color: '#555' }}>Founder & Managing Director</span></h2>
+
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#3a3a3a', marginBottom: '1.5rem' }}>
+                With over 30 years of experience in the accounting industry, MD Lawrence has built a reputation for precision, integrity, and strategic financial guidance. His career spans decades of helping businesses streamline operations, maintain compliance, and achieve sustainable growth.
+              </p>
+              <p style={{ fontSize: '1.1rem', lineHeight: '1.8', color: '#3a3a3a' }}>
+                As the Founder and Managing Director of Safe Tech India, Lawrence brings his deep expertise in accounting and business management to the technology sector. His leadership is defined by a commitment to innovation, customer trust, and operational excellence. Under his guidance, Safe Tech India has grown into a trusted hub for IT solutions, empowering organizations across Tamil Nadu and beyond.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 6. FAQ */}
       <section style={{ padding: '6rem 1rem', background: '#fff' }}>
         <div className="container" style={{ maxWidth: '800px' }}>
@@ -567,7 +616,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             />
             <FAQItem
               q="Is there any membership fee?"
-              a="It is currently free for all verified IT dealers. No hidden charges."
+              a="We charge a nominal fee of ₹999/Year for verification and platform maintenance."
             />
             <FAQItem
               q="Can I manage my stock from a mobile phone?"

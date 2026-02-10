@@ -424,13 +424,40 @@ export default function Dashboard() {
                         </div>
 
                         {/* UNLOCKED: All dealers can upload products now */}
-                        <button
-                            className="btn btn-primary"
-                            style={{ width: '100%', marginBottom: '1rem' }}
-                            onClick={() => router.push('/dashboard/add-product')}
-                        >
-                            Add New Product
-                        </button>
+                        {/* Dealer Inventory Actions - Gated by Verification */}
+                        {profile.is_verified ? (
+                            <button
+                                className="btn btn-primary"
+                                style={{ width: '100%', marginBottom: '1rem', background: '#FECC00', color: 'black', fontWeight: 'bold' }}
+                                onClick={() => router.push('/dashboard/add-product')}
+                            >
+                                + Add New Product
+                            </button>
+                        ) : (
+                            <div style={{ padding: '1.5rem', background: '#FECC0022', border: '1px solid #FECC00', borderRadius: '8px', marginBottom: '1rem', textAlign: 'center' }}>
+                                <h4 style={{ color: '#FECC00', marginBottom: '0.5rem' }}>⚠️ Account Not Verified</h4>
+                                <p style={{ fontSize: '0.9rem', marginBottom: '1rem', opacity: 0.8 }}>
+                                    To start adding unlimited products, you need to verify your dealer account.
+                                </p>
+                                <a
+                                    href={`https://wa.me/919600707601?text=${encodeURIComponent('Hi SafeTech, I want to verify my dealer account (ID: ' + profile.id + ') and pay ₹999 to start selling.')}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="btn"
+                                    style={{
+                                        display: 'inline-block',
+                                        background: '#25D366',
+                                        color: 'white',
+                                        fontWeight: 'bold',
+                                        padding: '0.8rem 1.5rem',
+                                        textDecoration: 'none',
+                                        width: '100%'
+                                    }}
+                                >
+                                    Verify & Pay ₹999 on WhatsApp 💬
+                                </a>
+                            </div>
+                        )}
 
                         <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
                             {products.map(p => (

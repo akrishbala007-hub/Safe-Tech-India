@@ -247,7 +247,12 @@ export default function AboutPage() {
                 </div>
             </section>
 
-            {/* 6. Founder Note */}
+
+
+            {/* 6. Leadership Section - MOVED TO HOMEPAGE */}
+
+
+            {/* 7. Founder Note (Original) */}
             <section className="container" style={{ padding: '6rem 1rem', textAlign: 'center' }}>
                 <div style={{ maxWidth: '800px', margin: '0 auto', padding: '3rem', border: '3px solid #FDB813', borderRadius: '20px', background: 'white' }}>
                     <h3 style={{ fontSize: '2rem', marginBottom: '1.5rem', color: '#1a1a1a', fontWeight: '800' }}>Visionary Note from the Founder</h3>
