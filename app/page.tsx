@@ -68,6 +68,20 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
         .dealer-card:hover img {
             transform: scale(1.1);
         }
+        @media (max-width: 768px) {
+          .hero-container {
+            padding-top: 5rem !important;
+            padding-bottom: 4rem !important;
+            min-height: auto !important;
+          }
+          .hero-headline {
+            font-size: 2.5rem !important;
+            line-height: 1.1 !important;
+          }
+           .hero-subheadline {
+            font-size: 1rem !important;
+          }
+        }
       `}</style>
       <section style={{
         background: '#FECC00', // Brand Yellow
@@ -88,10 +102,10 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           backgroundSize: '40px 40px'
         }}></div>
 
-        <div className="container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', paddingTop: '8rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
+        <div className="container hero-container" style={{ position: 'relative', zIndex: 1, maxWidth: '1200px', paddingTop: '8rem', paddingLeft: '1rem', paddingRight: '1rem' }}>
 
           {/* Main Headline */}
-          <h1 style={{
+          <h1 className="hero-headline" style={{
             fontSize: 'clamp(2.5rem, 6vw, 4.5rem)',
             fontWeight: '900',
             marginBottom: '1rem',
@@ -103,7 +117,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             for Computer & Hardware Dealers, Distributors, and Customers.
           </h1>
 
-          <p style={{
+          <p className="hero-subheadline" style={{
             fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
             color: '#333',
             marginBottom: '2rem',
@@ -333,7 +347,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#1a1a1a' }}>Designed for Dealers. Built for Trust.</h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
             <FeatureRow
               title="Zero Commission Sales"
               desc="We don't take a cut. You pay the annual fee; you keep 100% of your profits."
