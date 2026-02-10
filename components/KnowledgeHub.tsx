@@ -18,7 +18,7 @@ export default function KnowledgeHub() {
                 <h2 style={{ textAlign: 'center', marginBottom: '1rem', fontSize: '2.5rem', color: '#1a1a1a' }}>Become a Master Dealer: Insights & Trends</h2>
                 <p style={{ textAlign: 'center', color: '#666', marginBottom: '4rem' }}>Stay ahead of the curve with our expert guides.</p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
                     {/* Article 1 - Strategy */}
                     <ArticleCard
                         image="https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?auto=format&fit=crop&w=600&q=80"

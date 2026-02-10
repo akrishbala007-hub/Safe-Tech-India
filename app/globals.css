@@ -49,6 +49,7 @@ body {
   font-family: var(--font-main);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* Utilities */
@@ -313,6 +314,21 @@ h3 {
   nav .nav-link {
     font-size: 0.9rem !important;
     padding: 0.25rem 0.5rem;
+  }
+
+  /* Force Navbar contents to stack and center */
+  .nav-links-desktop {
+    flex-direction: column;
+    gap: 0.5rem !important;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+
+  /* Target the action buttons container (it doesn't have a class, so I'll target the last child of nav .container) */
+  nav .container>div:last-child {
+    justify-content: center;
+    width: 100%;
   }
 
   /* Contact Page Tweaks */

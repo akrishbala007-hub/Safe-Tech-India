@@ -79,12 +79,17 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
              height: auto !important; 
           }
           #hero-container {
-            padding-top: 5rem !important; 
+            padding-top: 4rem !important; 
             padding-bottom: 2rem !important;
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+            width: 100% !important;
           }
           .hero-headline {
-            font-size: 2rem !important;
+            font-size: 1.75rem !important;
             line-height: 1.2 !important;
+            word-wrap: break-word !important; 
+            overflow-wrap: break-word !important;
           }
            .hero-subheadline {
             font-size: 1rem !important;
@@ -92,6 +97,14 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           }
           .hero-cta-container {
             margin-bottom: 3rem !important;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+          }
+          .hero-cta-btn {
+             width: 100% !important;
+             display: block !important;
+             text-align: center !important;
           }
         }
       `}</style>
@@ -123,7 +136,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             marginBottom: '1rem',
             lineHeight: '1.2',
             color: '#1a1a1a',
-            animation: 'fadeInUp 0.8s ease-out'
+            animation: 'fadeInUp 0.8s ease-out',
+            maxWidth: '100%',
+            overflowWrap: 'break-word'
           }}>
             India’s Trusted <span style={{ color: '#fff', textShadow: '2px 2px 0px #000' }}>Digital Ecosystem</span><br />
             for Computer & Hardware Dealers, Distributors, and Customers.
@@ -149,7 +164,9 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             color: '#004080',
             fontWeight: 'bold',
             marginBottom: '3rem',
-            animation: 'fadeInUp 0.8s ease-out 0.3s backwards'
+            animation: 'fadeInUp 0.8s ease-out 0.3s backwards',
+            maxWidth: '100%',
+            whiteSpace: 'normal'
           }}>
             ISO 9001:2015 Quality certified
           </div>
@@ -159,7 +176,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '5rem',
             animation: 'fadeInUp 0.8s ease-out 0.4s backwards'
           }}>
-            <Link href="/register" style={{
+            <Link href="/register" className="hero-cta-btn" style={{
               background: '#000',
               color: '#FECC00', // High contrast
               padding: '1.2rem 3rem',
@@ -173,7 +190,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             }}>
               Register My Shop Now
             </Link>
-            <Link href="#ecosystem" style={{
+            <Link href="#ecosystem" className="hero-cta-btn" style={{
               border: '2px solid #000',
               color: '#000',
               padding: '1.2rem 3rem',
@@ -313,7 +330,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <p style={{ fontSize: '1.1rem', color: '#666', maxWidth: '600px', margin: '0 auto' }}>Every "Verified" laptop on our platform undergoes a rigorous inspection.</p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '2rem' }}>
             {/* Physical */}
             <div style={{ padding: '2rem', background: '#f8f9fa', borderRadius: '16px', border: '1px solid #eee' }}>
               <h3 style={{ fontSize: '1.4rem', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>🛠️ Physical Sync</h3>
@@ -359,7 +376,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', color: '#1a1a1a' }}>Designed for Dealers. Built for Trust.</h2>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
             <FeatureRow
               title="Zero Commission Sales"
               desc="We don't take a cut. You pay the annual fee; you keep 100% of your profits."
@@ -458,7 +475,7 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
           <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem', textAlign: 'center', color: '#000' }}>One Platform. Every Grade of Tech.</h2>
           <p style={{ textAlign: 'center', color: '#666', marginBottom: '4rem' }}>A balanced approach for all business types.</p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '3rem' }}>
             {/* New & Authorized */}
             <div style={{
               background: '#f8f9fa',

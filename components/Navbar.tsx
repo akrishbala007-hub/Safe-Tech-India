@@ -56,13 +56,12 @@ export default function Navbar() {
                 </Link>
 
                 {/* Navigation Links */}
-                <div style={{
+                <div className="nav-links-desktop" style={{
                     display: 'flex',
                     alignItems: 'center',
                     gap: '2rem',
                     flexWrap: 'wrap'
-                }} className="nav-links-desktop">
-                    {/* Added class for potential mobile hiding if needed later */}
+                }}>
                     <Link href="/" style={navLinkStyle}>Home</Link>
                     <Link href="/products" style={navLinkStyle}>Products</Link>
                     <Link href="/service-engineer" style={navLinkStyle}>Service Engineers</Link>
