@@ -9,13 +9,14 @@ export const metadata: Metadata = {
   alternates: {
     canonical: '/',
   },
-  title: 'Safe Tech India | Best Computer Hub in Tamil Nadu & Coimbatore',
-  description: "India's trusted digital ecosystem for computer dealers, distributors, and customers in Tamil Nadu. Buy refurbished laptops, desktops, and computer hardware in Coimbatore, Chennai, and Madurai.",
+  title: 'Safe Tech India - Official Website | Premium Refurbished Laptops & Hardware',
+  description: "India's trusted digital ecosystem for computer dealers and customers. Buy verified refurbished laptops, desktops, and hardware. Developed by Grace Finnovation Private Limited.",
   keywords: [
     'Refurbished Laptops Coimbatore',
     'Computer Dealers Tamil Nadu',
     'Best Laptop Shop Chennai',
-    'Safe Tech India',
+    'Safe Tech India Official',
+    'Grace Finnovation',
     'Used Computers Madurai',
     'Computer Hardware Wholesale Tamil Nadu',
     'Second hand laptops Coimbatore'
@@ -39,8 +40,8 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     url: 'https://safetechindia.org.in',
-    title: 'Safe Tech India | Top Refurbished Computer Marketplace in Tamil Nadu',
-    description: "The ultimate B2B & B2C computer ecosystem. Serving dealers and customers across Coimbatore, Chennai, and all of Tamil Nadu.",
+    title: 'Safe Tech India - Official Website | Premium Refurbished Laptops',
+    description: "The ultimate B2B & B2C computer ecosystem. Serving dealers and customers across Coimbatore, Chennai, and all of Tamil Nadu. A Grace Finnovation initiative.",
     siteName: 'Safe Tech India',
     images: [{
       url: '/logo.png',
@@ -48,13 +49,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Safe Tech India | Tamil Nadu Computer Marketplace',
-    description: "India's trusted marketplace for refurbished computers and accessories.",
+    title: 'Safe Tech India | Official Website',
+    description: "India's trusted marketplace for refurbished computers. A Grace Finnovation initiative.",
     images: ['/logo.png'],
   },
-  verification: {
-    google: 'google-site-verification=YOUR_VERIFICATION_CODE',
-  }
+  // verification: {
+  //   google: 'verified-via-dns', 
+  // }
 }
 
 export const viewport = {
@@ -80,7 +81,8 @@ export default function RootLayout({
     ],
     contactPoint: {
       '@type': 'ContactPoint',
-      telephone: '+91-XXXXX-XXXXX',
+      telephone: '+91 96007 07601',
+      email: 'williamjohnson@gracefinnovation.com',
       contactType: 'customer service',
       areaServed: 'IN',
       availableLanguage: ['en', 'ta']
@@ -90,11 +92,12 @@ export default function RootLayout({
   const localBusinessLd = {
     '@context': 'https://schema.org',
     '@type': 'ComputerStore',
-    name: 'Safe Tech India Computer Hub',
+    name: 'Safe Tech India',
     image: 'https://safetechindia.org.in/logo.png',
     '@id': 'https://safetechindia.org.in',
     url: 'https://safetechindia.org.in',
-    telephone: '+91-XXXXX-XXXXX',
+    telephone: '+91 96007 07601',
+    email: 'williamjohnson@gracefinnovation.com',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Town Hall',

@@ -144,18 +144,24 @@ export default async function Home({ searchParams }: { searchParams: Promise<{ q
             for Computer & Hardware Dealers, Distributors, and Customers.
           </h1>
 
-          <p className="hero-subheadline" style={{
-            fontSize: 'clamp(1rem, 1.5vw, 1.2rem)',
-            color: '#333',
-            marginBottom: '2rem',
-            maxWidth: '900px',
-            margin: '0 auto 2rem',
-            lineHeight: '1.6',
-            fontWeight: '600',
+          {/* Grace Finnovation Branding */}
+          <div style={{
+            display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginBottom: '2rem',
             animation: 'fadeInUp 0.8s ease-out 0.2s backwards'
           }}>
-            Developed by <strong>Grace Finnovation</strong>
-          </p>
+            <div style={{ fontSize: '0.9rem', color: '#555', fontWeight: '800', letterSpacing: '2px', textTransform: 'uppercase', marginBottom: '0.2rem' }}>Developed By</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', background: 'rgba(255,255,255,0.9)', padding: '0.5rem 1rem', borderRadius: '50px', boxShadow: '0 4px 15px rgba(0,0,0,0.1)' }}>
+              <img src="/grace-logo.jpg" alt="Grace Finnovation" style={{ height: '30px', borderRadius: '50%' }} />
+              <div style={{ textAlign: 'left' }}>
+                <div style={{ fontSize: '0.9rem', fontWeight: '800', color: '#1a1a1a', lineHeight: '1.1' }}>Grace Finnovation Private Limited</div>
+                <div style={{ fontSize: '0.7rem', color: '#555', lineHeight: '1.1', display: 'flex', gap: '0.5rem' }}>
+                  <span>CIN: U62013TZ2025PTC034579</span>
+                  <span>|</span>
+                  <span>GSTIN: 33AAMCG0134E1Z4</span>
+                </div>
+              </div>
+            </div>
+          </div>
           <div style={{
             display: 'inline-block',
             padding: '0.8rem 1.5rem',

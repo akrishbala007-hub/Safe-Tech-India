@@ -23,8 +23,15 @@ export default function Footer() {
                             ISO 9001:2015 Certified
                         </div>
 
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                            <img src="/grace-logo.jpg" alt="Grace Finnovation Logo" style={{ height: '40px', borderRadius: '4px' }} />
+                            <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
+                                Developed by <strong>Grace Finnovation Private Limited</strong><br />
+                                <span style={{ fontSize: '0.8rem', opacity: 0.8 }}>CIN: U62013TZ2025PTC034579 | GSTIN: 33AAMCG0134E1Z4</span>
+                            </p>
+                        </div>
                         <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.95rem', lineHeight: '1.6', maxWidth: '600px', margin: '0 auto' }}>
-                            Developed by <strong>Grace Finnovation</strong>, Safe Tech India is designed as a trusted platform for IT hardware dealers, offering streamlined processes, compliance support, and digital growth opportunities.
+                            Safe Tech India is designed as a trusted platform for IT hardware dealers, offering streamlined processes, compliance support, and digital growth opportunities.
                         </p>
                     </div>
 
@@ -47,7 +54,7 @@ export default function Footer() {
                     <div style={{ marginBottom: '1rem', fontSize: '1.1rem', fontWeight: '600', color: 'rgba(255,255,255,0.9)' }}>
                         <span>📞 24/7 Support: +91 96007 07601</span>
                         <span style={{ margin: '0 1rem', opacity: 0.3 }}>|</span>
-                        <span>✉️ support@safetechindia.org.in</span>
+                        <span>✉️ williamjohnson@gracefinnovation.com</span>
                     </div>
 
                     {/* Policy Links */}
